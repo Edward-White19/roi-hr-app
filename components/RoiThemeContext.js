@@ -2,8 +2,10 @@ import React, { createContext, useContext, useState } from "react";
 import roiLightTheme from "../themes/roi-light.json";
 import roiDarkTheme from "../themes/roi-dark.json";
 
+/** Theme context for ROI style. */
 const RoiThemeContext = createContext();
 
+/** Theme provider for ROI style. */
 export const RoiThemeProvider = ({ children }) => {
   // boolean isDark;
   const [isDark, setIsDark] = useState(false);
@@ -24,4 +26,5 @@ export const RoiThemeProvider = ({ children }) => {
   );
 }
 
+/** Theme getter for ROI style. */
 export const useRoiTheme = () => useContext(RoiThemeContext);

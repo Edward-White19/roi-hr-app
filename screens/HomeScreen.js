@@ -1,11 +1,15 @@
 import React from 'react'
-import { View, Button, StyleSheet } from 'react-native'
-import { Text } from 'react-native-paper';
+import { View, StyleSheet } from 'react-native'
+import { Surface, Text } from 'react-native-paper';
+import RoiLogo from '../components/RoiLogo';
 
 export default function HomeScreen(props) {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Home Screen</Text>
+      <Surface style={styles.surface}>
+        <RoiLogo />
+        <Text variant='displayLarge' style={styles.text}>HR Contact Management System</Text>
+      </Surface>
     </View>
   )
 }
@@ -17,7 +21,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   text: {
-    fontSize: 18,
-    marginBottom: 20,
+    textAlign: "center",
+    fontWeight: "bold",
+  },
+  surface: {
+    flex: 1,
+    padding: 8,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
