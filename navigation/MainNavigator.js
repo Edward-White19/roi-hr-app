@@ -1,20 +1,20 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
 import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
-import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import HomeScreen from '../screens/HomeScreen';
-import DirectoryScreen from '../screens/DirectoryScreen';
-import PersonEditScreen from '../screens/PersonEditScreen';
 import HelpScreen from '../screens/HelpScreen';
+import DirectoryNavigator from './DirectoryNavigator';
 
 const Tab = createMaterialBottomTabNavigator();
 const iconSize = 26;
 
-export default function BottomNavigator() {
+/** Primary tab navigator of the application, displayed at the bottom of the screen. */
+export default function MainNavigator() {
   return (
     <Tab.Navigator>
       <Tab.Screen
-        name='Home'
+        name='home'
         component={HomeScreen}
         options={{
           tabBarLabel: 'Home',
@@ -24,8 +24,8 @@ export default function BottomNavigator() {
         }}
       />
       <Tab.Screen
-        name='Directory'
-        component={DirectoryScreen}
+        name='directory'
+        component={DirectoryNavigator}
         options={{
           tabBarLabel: 'View',
           tabBarIcon: ({ color, size }) => (
@@ -34,17 +34,7 @@ export default function BottomNavigator() {
         }}
       />
       <Tab.Screen
-        name='Add'
-        component={PersonEditScreen}
-        options={{
-          tabBarLabel: 'Add',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name='add' color={color} size={iconSize} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name='Help'
+        name='help'
         component={HelpScreen}
         options={{
           tabBarLabel: 'Help',

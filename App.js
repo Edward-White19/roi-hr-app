@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import BottomNavigator from './navigation/BottomNavigator';
+import RootNavigator from './navigation/RootNavigator';
 import { PaperProvider } from 'react-native-paper';
 import { RoiThemeProvider, useRoiTheme } from './components/RoiThemeContext';
 
@@ -21,7 +21,7 @@ function Main() {
   return (
     <PaperProvider theme={theme}>
       <NavigationContainer>
-        <BottomNavigator />
+        <RootNavigator />
       </NavigationContainer>
     </PaperProvider>
   );
