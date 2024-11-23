@@ -2,10 +2,10 @@ import React from 'react'
 import { View, Button, StyleSheet } from 'react-native'
 import { Text } from 'react-native-paper';
 
-export default function ViewPersonScreen(props) {
+export default function PersonEditScreen(props) {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>ViewPerson Screen</Text>
+      <Text style={styles.text}>Person Add/Edit Screen</Text>
     </View>
   )
 }

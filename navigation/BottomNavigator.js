@@ -4,7 +4,7 @@ import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navig
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import HomeScreen from '../screens/HomeScreen';
 import DirectoryScreen from '../screens/DirectoryScreen';
-import AddPersonScreen from '../screens/AddPersonScreen';
+import PersonEditScreen from '../screens/PersonEditScreen';
 import HelpScreen from '../screens/HelpScreen';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -35,7 +35,7 @@ export default function BottomNavigator() {
       />
       <Tab.Screen
         name='Add'
-        component={AddPersonScreen}
+        component={PersonEditScreen}
         options={{
           tabBarLabel: 'Add',
           tabBarIcon: ({ color, size }) => (
