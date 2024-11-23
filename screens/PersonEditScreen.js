@@ -1,8 +1,26 @@
 import React from 'react'
-import { View, Button, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { Text } from 'react-native-paper';
+import { DIR_NAV_DIRECTORY } from '../navigation/DirectoryNavigator';
 
+/**
+ * Screen for editing the details of a staff member, or adding a new staff member.
+ * 
+ * Providing an ID less than 0 sets this screen to 'Add' mode.
+*/
 export default function PersonEditScreen(props) {
+  /** ID of the person to edit. */
+  const { id } = props.route.params;
+  /** Whether the page is in Edit or Add mode. */
+  const isEditMode = (id >= 0);
+
+  // #region Navigation
+  /** Navigates to the main Staff Contact Directory screen. */
+  function showDirectory() {
+    props.navigation.navigate(DIR_NAV_DIRECTORY);
+  }
+  // #endregion
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Person Add/Edit Screen</Text>
@@ -10,6 +28,7 @@ export default function PersonEditScreen(props) {
   )
 }
 
+/** Stylesheet. */
 const styles = StyleSheet.create({
   container: {
     flex: 1,

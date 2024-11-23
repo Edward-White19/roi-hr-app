@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import MainNavigator from './MainNavigator';
 import NotFoundScreen from '../screens/NotFoundScreen';
 
+/** Stack navigator to use. */
 const Stack = createStackNavigator();
 
 /** Root navigator of the application, containing the main tab navigator and an error screen. */
@@ -22,6 +23,6 @@ export default function RootNavigator() {
   );
 }
 
+/** Stylesheet. */
 const styles = StyleSheet.create({
-
 });

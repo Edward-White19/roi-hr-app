@@ -6,7 +6,9 @@ import HomeScreen from '../screens/HomeScreen';
 import HelpScreen from '../screens/HelpScreen';
 import DirectoryNavigator from './DirectoryNavigator';
 
+/** Bottom tab navigator to use. */
 const Tab = createMaterialBottomTabNavigator();
+/** Size of all bottom tab icons. */
 const iconSize = 26;
 
 /** Primary tab navigator of the application, displayed at the bottom of the screen. */
@@ -47,6 +49,6 @@ export default function MainNavigator() {
   );
 }
 
+/** Stylesheet. */
 const styles = StyleSheet.create({
-
 });
