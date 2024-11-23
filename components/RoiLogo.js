@@ -20,7 +20,7 @@ export default function RoiLogo({ isSmall }) {
   return (
     <View>
       <TouchableOpacity
-        onPress={() => {
+        onPressIn={() => {
           toggleColour();
           console.log("Toggled logo colour.");
         }}
