@@ -1,49 +1,98 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
-import { useRoiTheme } from '../components/RoiThemeContext';
-import { Surface, Switch, Text } from 'react-native-paper';
+import { StyleSheet } from 'react-native'
+import { Surface, Text } from 'react-native-paper';
+import RoiHeader from '../components/RoiHeader';
+import { ScrollView } from 'react-native-web';
+import RoiBackdrop from '../components/RoiBackdrop';
+import { colours } from '../styles/RoiStyle';
 
+/**
+ * Help screen, providing support for the user in
+ * understanding the application and how it works.
+*/
 export default function HelpScreen(props) {
-  const { isDarkTheme, toggleTheme } = useRoiTheme();
-
   return (
-    <Surface style={styles.container}>
-      <Text variant="displaySmall" style={styles.title}>
-        Help Screen
-      </Text>
-      <View style={styles.switchContainer} secondary={true}>
-        <Text variant="titleSmall" style={styles.subtitle}>
-          Current Theme: {isDarkTheme ? "Dark" : "Light"}
-        </Text>
-        <Switch value={isDarkTheme} onValueChange={toggleTheme} />
-      </View>
-    </Surface>
+    <RoiBackdrop style={styles.backdropMain}>
+      <RoiHeader title='Help' />
+      <ScrollView contentContainerStyle={styles.scrollMain}>
+        {
+          // Generate content sections.
+          pageContent.map(({ header, body }, index) => (
+            <Surface
+              key={index}
+              style={styles.surfaceSection}
+              elevation={1}
+            >
+              <Text variant='headlineMedium' style={styles.textSectionHeader}>{header}</Text>
+              <Text variant='bodyLarge' style={styles.textSectionBody}>{body}</Text>
+            </Surface>
+          ))
+        }
+      </ScrollView>
+    </RoiBackdrop>
   )
 }
 
+/**
+ * Text content for the user to read.
+ * 
+ * Current placeholder text was written by Jalal Alhaddad.
+*/
+const pageContent = [
+  {
+    header: `1. Staff Directory`,
+    body: `The Staff Directory feature allows you to browse a list of all employees in the organisation. `
+      + `You can search for specific staff members and view their detailed information, including their roles, contact details and departments.`
+  },
+  {
+    header: `2. Add New Staff`,
+    body: `This feature enables you to add a new staff member to the directory. `
+      + `To do so, tap on the "+" icon or the "Add Staff" button, fill in the required details such as name, position, department, and contact information, and save the entry.`
+  },
+  {
+    header: `3. Update Staff Information`,
+    body: `You can update an existing staff member's information by navigating to their profile and selecting the "Edit" option.`
+      + `Make the necessary changes and ensure to save them to keep the directoy current.`
+  },
+  {
+    header: `4. Delete Staff Entry`,
+    body: `To remove a staff member from the directory, go to their profile, tap the "Delete" button, and confirm the action.`
+      + `This will permanently remove the staff member from the directory.`
+  },
+];
+
+/** Stylesheet. */
 const styles = StyleSheet.create({
-  container: {
+  backdropMain: {
     flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
-  title: {
-    margin: 20,
+  scrollMain: {
+    paddingVertical: 40,
+    rowGap: 40,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
-  subtitle: {
-    marginVertical: 16,
-    fontSize: 16,
+  surfaceSection: {
+    width: '100%',
+    padding: 20,
+    rowGap: 20,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
   },
-  switchContainer: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 5,
-    paddingHorizontal: 30,
-    shadowRadius: 5,
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.5,
+  textSectionHeader: {
+    textAlign: 'left',
+    textAlignVertical: 'top',
+    fontWeight: 'bold',
+    color: colours.red,
   },
-  switchLabel: {
-    fontSize: 16,
-  },
+  textSectionBody: {
+    textAlign: 'left',
+    textAlignVertical: 'top',
+    fontWeight: 'normal',
+  }
 });

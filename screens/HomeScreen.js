@@ -2,33 +2,38 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Surface, Text } from 'react-native-paper';
 import RoiLogo from '../components/RoiLogo';
+import RoiBackdrop from '../components/RoiBackdrop';
 
+/** Initial screen, greeting the user. */
 export default function HomeScreen(props) {
   return (
-    <View style={styles.container}>
-      <Surface style={styles.surface}>
+    <RoiBackdrop style={styles.backdropMain}>
+      <Surface style={styles.surfaceMain} elevation={1}>
         <RoiLogo />
-        <Text variant='displayLarge' style={styles.text}>HR Contact Management System</Text>
+        <Text variant='displayMedium' style={styles.textTitle}>
+          HR Contact Management System
+        </Text>
       </Surface>
-    </View>
+    </RoiBackdrop>
   )
 }
 
+/** Stylesheet. */
 const styles = StyleSheet.create({
-  container: {
+  backdropMain: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  text: {
-    textAlign: "center",
-    fontWeight: "bold",
+  surfaceMain: {
+    width: '100%',
+    padding: 20,
+    rowGap: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  surface: {
-    flex: 1,
-    padding: 8,
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
+  textTitle: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+  }
 });

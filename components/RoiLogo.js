@@ -18,19 +18,17 @@ export default function RoiLogo({ isSmall }) {
   const source = (isGrey) ? roiLogoGrey : roiLogoRed;
 
   return (
-    <View>
-      <TouchableOpacity
-        onPressIn={() => {
-          toggleColour();
-          console.log("Toggled logo colour.");
-        }}
-      >
-        <Image
-          source={source}
-          style={{ width: width, height: height }}
-        />
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity
+      onPressIn={() => {
+        toggleColour();
+        console.log("Toggled logo colour.");
+      }}
+    >
+      <Image
+        source={source}
+        style={{ width: width, height: height }}
+      />
+    </TouchableOpacity>
   )
 }
 
