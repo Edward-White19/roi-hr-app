@@ -1,15 +1,19 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Avatar, Card, Text } from 'react-native-paper';
+import { StyleSheet, FlatList } from 'react-native';
+import { Avatar, Button, Card, FAB, Surface, Text } from 'react-native-paper';
 import RoiHeader from '../components/RoiHeader';
 import RoiBackdrop from '../components/RoiBackdrop';
-import { FlatList } from 'react-native';
+import { View } from 'react-native-web';
 
 const dummyData = [
   { id: 1, name: "Jenny Smith", department: "Human Resources", phone: "+61 123 456 789" },
-  { id: 2, name: "Jenny Smith", department: "Human Resources", phone: "+61 123 456 789" },
+  { id: 2, name: "Jenny skdfshdgfjhsdgf Smith", department: "Human Resources", phone: "+61 123 456 789" },
   { id: 3, name: "Jenny Smith", department: "Human Resources", phone: "+61 123 456 789" },
   { id: 4, name: "Jenny Smith", department: "Human Resources", phone: "+61 123 456 789" },
+  { id: 5, name: "Jenny Smith", department: "Human Resources", phone: "+61 123 456 789" },
+  { id: 6, name: "Jenny Smith", department: "Human Resources", phone: "+61 123 456 789" },
+  { id: 7, name: "Jenny Smith", department: "Human Resources", phone: "+61 123 456 789" },
+  { id: 8, name: "Jenny Smith", department: "Human Resources", phone: "+61 123 456 789" },
 ];
 
 /**
@@ -38,29 +42,72 @@ export default function DirectoryScreen(props) {
 
   return (
     <RoiBackdrop>
+      {/* Header. */}
       <RoiHeader title='Staff Directory' />
+
+      {/* Scrolling list view. */}
       <FlatList
         style={{ width: '100%' }}
         contentContainerStyle={styles.listMain}
         data={dummyData}
         keyExtractor={item => item.id}
         renderItem={({ item }) =>
-          <Card key={item.id} style={styles.cardProfile}>
-            <Card.Title
-              title={item.name}
-              titleVariant='titleMedium'
-              right={(props) => {
-                <Avatar.Icon size={48} icon="folder" style={{ marginHorizontal: 10 }} />
-              }}
-            />
-            <Card.Content>
-              <Text variant='bodyLarge'>{item.department}</Text>
-              <Text variant='bodyMedium'>{item.phone}</Text>
-            </Card.Content>
-          </Card>
+          <Surface key={item.id} style={styles.surfaceProfile}>
+            {/* Icon and button section. */}
+            <View style={styles.viewProfileActions}>
+              <Avatar.Icon
+                icon='folder'
+                size={72}
+              />
+              <Button
+                mode='contained'
+                style={{ width: 72 }}
+                labelStyle={{ margin: 0, padding: 5 }}
+                onPress={() => showViewPerson(item.id)}
+              >
+                View
+              </Button>
+            </View>
+
+            {/* Text content section. */}
+            <View style={styles.viewProfileContent}>
+              <Text
+                variant='headlineSmall'
+                numberOfLines={1}
+                ellipsizeMode='clip'
+                style={styles.textProfileTitle}
+              >
+                {item.name}
+              </Text>
+              <Text
+                variant='titleMedium'
+                numberOfLines={1}
+                ellipsizeMode='clip'
+              >
+                {item.department}
+              </Text>
+              <Text
+                variant='titleSmall'
+                numberOfLines={1}
+                ellipsizeMode='clip'
+              >
+                {item.phone}
+              </Text>
+            </View>
+          </Surface>
         }
       >
       </FlatList>
+
+      {/* 'Add' button. */}
+      <FAB
+        style={styles.fabAdd}
+        icon='plus'
+        size='medium'
+        mode='elevated'
+        variant='tertiary'
+        onPress={showAddPerson}
+      />
     </RoiBackdrop>
   )
 }
@@ -77,12 +124,36 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     flexWrap: 'wrap',
   },
-  cardProfile: {
+  surfaceProfile: {
     width: 320,
-    padding: 20,
-    rowGap: 20,
+    paddingVertical: 15,
+    columnGap: 20,
+    flexDirection: 'row-reverse',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+  },
+  viewProfileContent: {
+    maxWidth: 195,
+    marginLeft: 15,
+    paddingVertical: 5,
+    rowGap: 15,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'flex-start',
   },
+  viewProfileActions: {
+    marginRight: 15,
+    rowGap: 15,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  textProfileTitle: {
+    fontWeight: 'bold',
+  },
+  fabAdd: {
+    position: 'absolute',
+    bottom: 15,
+    right: 15,
+  }
 });
