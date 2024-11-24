@@ -21,9 +21,7 @@ export default function HomeScreen(props) {
 /** Stylesheet. */
 const styles = StyleSheet.create({
   backdropMain: {
-    flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
   },
   surfaceMain: {
     width: '100%',

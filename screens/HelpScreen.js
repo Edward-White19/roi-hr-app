@@ -12,9 +12,9 @@ import { colours } from '../styles/RoiStyle';
 */
 export default function HelpScreen(props) {
   return (
-    <RoiBackdrop style={styles.backdropMain}>
+    <RoiBackdrop>
       <RoiHeader title='Help' />
-      <ScrollView contentContainerStyle={styles.scrollMain}>
+      <ScrollView style={{ width: '100%' }} contentContainerStyle={styles.scrollMain}>
         {
           // Generate content sections.
           pageContent.map(({ header, body }, index) => (
@@ -63,12 +63,6 @@ const pageContent = [
 
 /** Stylesheet. */
 const styles = StyleSheet.create({
-  backdropMain: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
   scrollMain: {
     paddingVertical: 40,
     rowGap: 40,

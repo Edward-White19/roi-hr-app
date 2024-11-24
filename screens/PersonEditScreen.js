@@ -1,7 +1,6 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Text } from 'react-native-paper';
-import { DIR_NAV_DIRECTORY } from '../navigation/DirectoryNavigator';
 
 /**
  * Screen for editing the details of a staff member, or adding a new staff member.
@@ -17,7 +16,7 @@ export default function PersonEditScreen(props) {
   // #region Navigation
   /** Navigates to the main Staff Contact Directory screen. */
   function showDirectory() {
-    props.navigation.navigate(DIR_NAV_DIRECTORY);
+    props.navigation.navigate('view-all');
   }
   // #endregion
 

@@ -9,7 +9,15 @@ export default function RoiBackdrop({ children, style }) {
   return (
     <ImageBackground
       source={roiBgImage}
-      style={{ flex: 1, width: '100%', height: '100%', ...style }}
+      style={{
+        flex: 1,
+        width: '100%',
+        height: '100%',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        ...style
+      }}
       resizeMode='repeat'
     >
       {children}
