@@ -1,6 +1,20 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
-import { Text } from 'react-native-paper';
+import { Avatar, Surface, Text } from 'react-native-paper';
+import { colours } from '../styles/RoiStyle';
+import RoiBackdrop from '../components/RoiBackdrop';
+import { ScrollView } from 'react-native-web';
+
+const dummyData = [
+  { id: 1, name: "Jenny Smith", department: "Human Resources", phone: "01 2345 6789" },
+  { id: 2, name: "Jenny skdfshdgfjhsdgf Smith", department: "Human Resources", phone: "01 2345 6789" },
+  { id: 3, name: "Jenny Smith", department: "Human Resources", phone: "01 2345 6789" },
+  { id: 4, name: "Jenny Smith", department: "Human Resources", phone: "01 2345 6789" },
+  { id: 5, name: "Jenny Smith", department: "Human Resources", phone: "01 2345 6789" },
+  { id: 6, name: "Jenny Smith", department: "Human Resources", phone: "01 2345 6789" },
+  { id: 7, name: "Jenny Smith", department: "Human Resources", phone: "01 2345 6789" },
+  { id: 8, name: "Jenny Smith", department: "Human Resources", phone: "01 2345 6789" },
+];
 
 /**
  * Screen for viewing details of a staff member.
@@ -8,6 +22,7 @@ import { Text } from 'react-native-paper';
 export default function PersonViewScreen(props) {
   /** ID of the person to view. */
   const { id } = props.route.params;
+  const person = dummyData.find((item) => item.id === id);
 
   // #region Navigation
   /** Navigates to the main Staff Contact Directory screen. */
@@ -17,21 +32,64 @@ export default function PersonViewScreen(props) {
   // #endregion
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Person View Screen</Text>
-    </View>
+    <RoiBackdrop>
+      <Surface>
+        <View>
+          <Avatar.Icon icon='folder' size={72} />
+        </View>
+        <View>
+          <Text>{person.name}</Text>
+        </View>
+      </Surface>
+      <ScrollView style={{ width: '100%' }} contentContainerStyle={styles.scrollMain}>
+        <Surface
+          style={styles.surfaceSection}
+          elevation={1}
+        >
+          <PersonField label='Department' value={person.department} />
+          <PersonField label='Phone' value={person.phone} />
+        </Surface>
+      </ScrollView>
+    </RoiBackdrop>
   )
+}
+
+/** Information entry. */
+function PersonField({ label, value }) {
+  return (
+    <View>
+      <Text variant='headlineMedium' style={styles.textSectionHeader}>{label}</Text>
+      <Text variant='bodyLarge' style={styles.textSectionBody}>{value}</Text>
+    </View>
+  );
 }
 
 /** Stylesheet. */
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+  scrollMain: {
+    paddingVertical: 40,
+    rowGap: 40,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
-  text: {
-    fontSize: 18,
-    marginBottom: 20,
+  surfaceSection: {
+    width: '100%',
+    padding: 20,
+    rowGap: 20,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
   },
+  textSectionHeader: {
+    textAlign: 'left',
+    textAlignVertical: 'top',
+    fontWeight: 'bold',
+    color: colours.red,
+  },
+  textSectionBody: {
+    textAlign: 'left',
+    textAlignVertical: 'top',
+    fontWeight: 'normal',
+  }
 });

@@ -6,14 +6,14 @@ import RoiBackdrop from '../components/RoiBackdrop';
 import { View } from 'react-native-web';
 
 const dummyData = [
-  { id: 1, name: "Jenny Smith", department: "Human Resources", phone: "+61 123 456 789" },
-  { id: 2, name: "Jenny skdfshdgfjhsdgf Smith", department: "Human Resources", phone: "+61 123 456 789" },
-  { id: 3, name: "Jenny Smith", department: "Human Resources", phone: "+61 123 456 789" },
-  { id: 4, name: "Jenny Smith", department: "Human Resources", phone: "+61 123 456 789" },
-  { id: 5, name: "Jenny Smith", department: "Human Resources", phone: "+61 123 456 789" },
-  { id: 6, name: "Jenny Smith", department: "Human Resources", phone: "+61 123 456 789" },
-  { id: 7, name: "Jenny Smith", department: "Human Resources", phone: "+61 123 456 789" },
-  { id: 8, name: "Jenny Smith", department: "Human Resources", phone: "+61 123 456 789" },
+  { id: 1, name: "Jenny Smith", department: "Human Resources", phone: "01 2345 6789" },
+  { id: 2, name: "Jenny skdfshdgfjhsdgf Smith", department: "Human Resources", phone: "01 2345 6789" },
+  { id: 3, name: "Jenny Smith", department: "Human Resources", phone: "01 2345 6789" },
+  { id: 4, name: "Jenny Smith", department: "Human Resources", phone: "01 2345 6789" },
+  { id: 5, name: "Jenny Smith", department: "Human Resources", phone: "01 2345 6789" },
+  { id: 6, name: "Jenny Smith", department: "Human Resources", phone: "01 2345 6789" },
+  { id: 7, name: "Jenny Smith", department: "Human Resources", phone: "01 2345 6789" },
+  { id: 8, name: "Jenny Smith", department: "Human Resources", phone: "01 2345 6789" },
 ];
 
 /**
