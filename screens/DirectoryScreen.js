@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, FlatList } from 'react-native';
-import { Avatar, Button, Card, FAB, Surface, Text } from 'react-native-paper';
+import { Avatar, Button, Card, Dialog, FAB, IconButton, Portal, Surface, Text } from 'react-native-paper';
 import RoiHeader from '../components/RoiHeader';
 import RoiBackdrop from '../components/RoiBackdrop';
 import { View } from 'react-native-web';
+import { deletePerson, fetchPeople } from '../utils/api';
 
 const dummyData = [
   { id: 1, name: "Jenny Smith", department: "Human Resources", phone: "01 2345 6789" },
@@ -23,6 +24,61 @@ const dummyData = [
  * or add a new staff member.
 */
 export default function DirectoryScreen(props) {
+  // #region Database Fetch
+  const [people, setPeople] = useState([]);
+  const [offline, setOffline] = useState(false);
+  const [error, setError] = useState(null);
+  const [visible, setVisible] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
+  const [selectedName, setSelectedName] = useState(null);
+
+  // Fetch the list of people.
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchPeople();
+        setPeople(data);
+      } catch (err) {
+        console.error(err);
+        setOffline(true);
+        setError("Unable to fetch data, offline mode");
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Delete a person.
+  async function handleDelete() {
+    if (selectedId !== null) {
+      try {
+        const success = await deletePerson(selectedId);
+        if (success) {
+          fetchData();
+          hideDialog();
+        } else {
+          setError("Failed to delete. Please try again.");
+        }
+      } catch (err) {
+        console.error("Error deleting:", err);
+        setError("Failed to delete. Check your connection.");
+        hideDialog();
+      }
+    }
+  }
+
+  function showDialog(id, name) {
+    setSelectedId(id);
+    setSelectedName(name);
+    setVisible(true);
+  }
+
+  function hideDialog() {
+    setVisible(false);
+    setSelectedId(null);
+  }
+  // #endregion
+
   // #region Navigation
   /** Navigates to the Add Person screen. */
   function showAddPerson() {
@@ -49,24 +105,35 @@ export default function DirectoryScreen(props) {
       <FlatList
         style={{ width: '100%' }}
         contentContainerStyle={styles.listMain}
-        data={dummyData}
+        data={people}
         keyExtractor={item => item.id}
         renderItem={({ item }) =>
-          <Surface key={item.id} style={styles.surfaceProfile}>
+          <Surface
+            key={item.id}
+            style={styles.surfaceProfile}
+          >
             {/* Icon and button section. */}
             <View style={styles.viewProfileActions}>
-              <Avatar.Icon
+              <IconButton
                 icon='folder'
-                size={72}
-              />
-              <Button
+                size={32}
                 mode='contained'
-                style={{ width: 72 }}
-                labelStyle={{ margin: 0, padding: 5 }}
                 onPress={() => showViewPerson(item.id)}
               >
                 View
-              </Button>
+              </IconButton>
+              <IconButton
+                icon='folder'
+                size={32}
+                mode='contained'
+                onPress={() => {
+                  setSelectedId(item.id);
+                  setSelectedName(item.name);
+                  showDialog();
+                }}
+              >
+                View
+              </IconButton>
             </View>
 
             {/* Text content section. */}
@@ -81,10 +148,11 @@ export default function DirectoryScreen(props) {
               </Text>
               <Text
                 variant='titleMedium'
-                numberOfLines={1}
+                numberOfLines={2}
                 ellipsizeMode='clip'
+                style={{ width: '100%' }}
               >
-                {item.department}
+                {item.Department.name}
               </Text>
               <Text
                 variant='titleSmall'
@@ -108,6 +176,21 @@ export default function DirectoryScreen(props) {
         variant='tertiary'
         onPress={showAddPerson}
       />
+
+      {/* Dialog for delete confirmation */}
+      <Portal>
+        <Dialog visible={visible} onDismiss={hideDialog}>
+          <Dialog.Title>Confirm Deletion</Dialog.Title>
+          <Dialog.Content>
+            <Text>Are you sure you want to delete?</Text>
+            <Text style={{ fontWeight: "bold" }}>{selectedName}</Text>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button onPress={hideDialog}>Cancel</Button>
+            <Button onPress={handleDelete}>Delete</Button>
+          </Dialog.Actions>
+        </Dialog>
+      </Portal>
     </RoiBackdrop>
   )
 }
@@ -125,7 +208,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   surfaceProfile: {
-    width: 320,
     paddingVertical: 15,
     columnGap: 20,
     flexDirection: 'row-reverse',
@@ -133,7 +215,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   viewProfileContent: {
-    maxWidth: 195,
+    width: 240,
     marginLeft: 15,
     paddingVertical: 5,
     rowGap: 15,
@@ -145,7 +227,12 @@ const styles = StyleSheet.create({
     marginRight: 15,
     rowGap: 15,
     flexDirection: 'column',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  viewProfileButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   textProfileTitle: {

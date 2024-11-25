@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, StyleSheet, ScrollView } from 'react-native'
-import { Text, TextInput } from 'react-native-paper';
+import { Surface, Text, TextInput } from 'react-native-paper';
 
 /**
  * Screen for editing the details of a staff member, or adding a new staff member.
