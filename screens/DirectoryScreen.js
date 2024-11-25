@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, FlatList } from 'react-native';
-import { Avatar, Button, Card, Dialog, FAB, IconButton, Portal, Surface, Text } from 'react-native-paper';
+import { Avatar, Button, Card, Dialog, FAB, IconButton, Menu, Portal, Surface, Text } from 'react-native-paper';
 import RoiHeader from '../components/RoiHeader';
 import RoiBackdrop from '../components/RoiBackdrop';
 import { View } from 'react-native-web';
@@ -28,7 +28,8 @@ export default function DirectoryScreen(props) {
   const [people, setPeople] = useState([]);
   const [offline, setOffline] = useState(false);
   const [error, setError] = useState(null);
-  const [visible, setVisible] = useState(false);
+  const [profileMenuVisible, setProfileMenuVisible] = useState(false);
+  const [deleteDialogVisible, setDeleteDialogVisible] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [selectedName, setSelectedName] = useState(null);
 
@@ -55,27 +56,42 @@ export default function DirectoryScreen(props) {
         const success = await deletePerson(selectedId);
         if (success) {
           fetchData();
-          hideDialog();
+          hideDeleteDialog();
         } else {
           setError("Failed to delete. Please try again.");
         }
       } catch (err) {
         console.error("Error deleting:", err);
         setError("Failed to delete. Check your connection.");
-        hideDialog();
+        hideDeleteDialog();
       }
     }
   }
 
-  function showDialog(id, name) {
+  function showProfileMenu(id, name) {
     setSelectedId(id);
     setSelectedName(name);
-    setVisible(true);
+    setProfileMenuVisible(true);
+    console.log("Opened profile menu.");
   }
 
-  function hideDialog() {
-    setVisible(false);
+  function dismissProfileMenu() {
+    setProfileMenuVisible(false);
     setSelectedId(null);
+    console.log("Dismissed profile menu.");
+  }
+
+  function showDeleteDialog(id, name) {
+    setSelectedId(id);
+    setSelectedName(name);
+    setDeleteDialogVisible(true);
+    console.log("Showed deletion dialog.");
+  }
+
+  function hideDeleteDialog() {
+    setDeleteDialogVisible(false);
+    setSelectedId(null);
+    console.log("Hid deletion dialog.");
   }
   // #endregion
 
@@ -108,34 +124,25 @@ export default function DirectoryScreen(props) {
         data={people}
         keyExtractor={item => item.id}
         renderItem={({ item }) =>
-          <Surface
+          <Card
             key={item.id}
             style={styles.surfaceProfile}
+            mode='elevated'
+            elevation={1}
+            onPress={() => showViewPerson(item.id)}
           >
-            {/* Icon and button section. */}
-            <View style={styles.viewProfileActions}>
-              <IconButton
-                icon='folder'
+            <Menu
+              visible={profileMenuVisible}
+              anchor={<IconButton
+                icon='dots-vertical'
                 size={32}
                 mode='contained'
-                onPress={() => showViewPerson(item.id)}
-              >
-                View
-              </IconButton>
-              <IconButton
-                icon='folder'
-                size={32}
-                mode='contained'
-                onPress={() => {
-                  setSelectedId(item.id);
-                  setSelectedName(item.name);
-                  showDialog();
-                }}
-              >
-                View
-              </IconButton>
-            </View>
-
+                style={styles.buttonProfileMeatballMenu}
+                onPress={() => showProfileMenu(item.id, item.name)}
+              />}
+              style={{ margin: 0, padding: 0 }}
+            >
+            </Menu>
             {/* Text content section. */}
             <View style={styles.viewProfileContent}>
               <Text
@@ -162,7 +169,7 @@ export default function DirectoryScreen(props) {
                 {item.phone}
               </Text>
             </View>
-          </Surface>
+          </Card>
         }
       >
       </FlatList>
@@ -179,14 +186,14 @@ export default function DirectoryScreen(props) {
 
       {/* Dialog for delete confirmation */}
       <Portal>
-        <Dialog visible={visible} onDismiss={hideDialog}>
+        <Dialog visible={deleteDialogVisible} onDismiss={hideDeleteDialog}>
           <Dialog.Title>Confirm Deletion</Dialog.Title>
           <Dialog.Content>
             <Text>Are you sure you want to delete?</Text>
             <Text style={{ fontWeight: "bold" }}>{selectedName}</Text>
           </Dialog.Content>
           <Dialog.Actions>
-            <Button onPress={hideDialog}>Cancel</Button>
+            <Button onPress={hideDeleteDialog}>Cancel</Button>
             <Button onPress={handleDelete}>Delete</Button>
           </Dialog.Actions>
         </Dialog>
@@ -208,7 +215,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   surfaceProfile: {
-    paddingVertical: 15,
     columnGap: 20,
     flexDirection: 'row-reverse',
     justifyContent: 'space-between',
@@ -217,6 +223,7 @@ const styles = StyleSheet.create({
   viewProfileContent: {
     width: 240,
     marginLeft: 15,
+    marginVertical: 15,
     paddingVertical: 5,
     rowGap: 15,
     flexDirection: 'column',
@@ -237,6 +244,13 @@ const styles = StyleSheet.create({
   },
   textProfileTitle: {
     fontWeight: 'bold',
+  },
+  buttonProfileMeatballMenu: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    margin: 0,
+    padding: 0,
   },
   fabAdd: {
     position: 'absolute',
