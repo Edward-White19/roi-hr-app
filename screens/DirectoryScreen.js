@@ -171,7 +171,7 @@ export default function DirectoryScreen(props) {
         size='medium'
         mode='elevated'
         variant='tertiary'
-        onPress={showAddPerson}
+        onPress={() => showAddPerson()}
       />
 
       {/* Dialog for delete confirmation */}

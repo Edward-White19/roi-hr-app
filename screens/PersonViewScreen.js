@@ -24,8 +24,8 @@ export default function PersonViewScreen(props) {
     state: '',
     zip: '0000',
     country: '',
-    Department: { id: 0, name: '' },
-    departmentId: null,
+    Department: { id: 1, name: '' },
+    departmentId: 1,
   });
   const [offline, setOffline] = useState(false);
   const [error, setError] = useState(null);
