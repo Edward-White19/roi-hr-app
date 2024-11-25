@@ -44,9 +44,7 @@ export default function DirectoryScreen(props) {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  useEffect(() => { fetchData() }, []);
 
   // Delete a person.
   async function handleDelete() {

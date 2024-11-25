@@ -1,20 +1,12 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
+import { ScrollView } from 'react-native-web';
 import { Avatar, Surface, Text } from 'react-native-paper';
 import { colours } from '../styles/RoiStyle';
 import RoiBackdrop from '../components/RoiBackdrop';
-import { ScrollView } from 'react-native-web';
-
-const dummyData = [
-  { id: 1, name: "Jenny Smith", department: "Human Resources", phone: "01 2345 6789" },
-  { id: 2, name: "Jenny skdfshdgfjhsdgf Smith", department: "Human Resources", phone: "01 2345 6789" },
-  { id: 3, name: "Jenny Smith", department: "Human Resources", phone: "01 2345 6789" },
-  { id: 4, name: "Jenny Smith", department: "Human Resources", phone: "01 2345 6789" },
-  { id: 5, name: "Jenny Smith", department: "Human Resources", phone: "01 2345 6789" },
-  { id: 6, name: "Jenny Smith", department: "Human Resources", phone: "01 2345 6789" },
-  { id: 7, name: "Jenny Smith", department: "Human Resources", phone: "01 2345 6789" },
-  { id: 8, name: "Jenny Smith", department: "Human Resources", phone: "01 2345 6789" },
-];
+import { fetchDepartments, fetchPersonById } from '../utils/api';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 /**
  * Screen for viewing details of a staff member.
@@ -22,7 +14,38 @@ const dummyData = [
 export default function PersonViewScreen(props) {
   /** ID of the person to view. */
   const { id } = props.route.params;
-  const person = dummyData.find((item) => item.id === id);
+
+  // #region Database Fetch
+  const [person, setPerson] = useState({
+    name: '',
+    phone: '00 0000 0000',
+    street: '',
+    city: '',
+    state: '',
+    zip: '0000',
+    country: '',
+    Department: { id: 0, name: '' },
+    departmentId: null,
+  });
+  const [offline, setOffline] = useState(false);
+  const [error, setError] = useState(null);
+
+  const fetchDataPerson = async () => {
+    try {
+      const data = await fetchPersonById(id);
+      setPerson(data);
+      console.log(data);
+    } catch (err) {
+      console.error(err);
+      setOffline(true);
+      setError("Unable to fetch data, offline mode");
+    }
+  };
+
+  useEffect(() => {
+    fetchDataPerson(id);
+  }, []);
+  // #endregion
 
   // #region Navigation
   /** Navigates to the main Staff Contact Directory screen. */
@@ -33,21 +56,21 @@ export default function PersonViewScreen(props) {
 
   return (
     <RoiBackdrop>
-      <Surface>
-        <View>
-          <Avatar.Icon icon='folder' size={72} />
-        </View>
-        <View>
-          <Text>{person.name}</Text>
-        </View>
+      <Surface style={styles.surfaceHeader} elevation={5}>
+        <Text variant='displaySmall' style={styles.textHeader}>{person.name}</Text>
       </Surface>
       <ScrollView style={{ width: '100%' }} contentContainerStyle={styles.scrollMain}>
         <Surface
-          style={styles.surfaceSection}
+          style={styles.surfaceContent}
           elevation={1}
         >
-          <PersonField label='Department' value={person.department} />
+          <PersonField label='Department' value={person.Department.name} />
           <PersonField label='Phone' value={person.phone} />
+          <PersonField label='Street' value={person.street} />
+          <PersonField label='City' value={person.city} />
+          <PersonField label='State' value={person.state} />
+          <PersonField label='Postcode' value={person.zip} />
+          <PersonField label='Country' value={person.country} />
         </Surface>
       </ScrollView>
     </RoiBackdrop>
@@ -58,8 +81,8 @@ export default function PersonViewScreen(props) {
 function PersonField({ label, value }) {
   return (
     <View>
-      <Text variant='headlineMedium' style={styles.textSectionHeader}>{label}</Text>
-      <Text variant='bodyLarge' style={styles.textSectionBody}>{value}</Text>
+      <Text variant='labelLarge' style={styles.textFieldHeader}>{label}</Text>
+      <Text variant='titleLarge' style={styles.textFieldBody}>{value}</Text>
     </View>
   );
 }
@@ -73,7 +96,14 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
-  surfaceSection: {
+  surfaceHeader: {
+    width: '100%',
+    padding: 20,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  surfaceContent: {
     width: '100%',
     padding: 20,
     rowGap: 20,
@@ -81,13 +111,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
   },
-  textSectionHeader: {
+  textHeader: {
+    fontWeight: 'bold',
+  },
+  textFieldHeader: {
     textAlign: 'left',
     textAlignVertical: 'top',
     fontWeight: 'bold',
     color: colours.red,
   },
-  textSectionBody: {
+  textFieldBody: {
     textAlign: 'left',
     textAlignVertical: 'top',
     fontWeight: 'normal',

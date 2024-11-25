@@ -8,7 +8,7 @@ const API_BASE_URL = 'http://localhost:3000/api';
 /** @returns An array of all 'department' objects. */
 export async function fetchDepartments() {
   try {
-    const response = await fetch(`${API_BASE_URL}/departments`);
+    const response = await fetch(`${API_BASE_URL}/department`);
     if (!response.ok) throw new Error('Failed to fetch Departments');
     return await response.json();
   } catch (error) {
