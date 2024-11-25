@@ -80,12 +80,12 @@ export default function DirectoryScreen(props) {
   // #region Navigation
   /** Navigates to the Add Person screen. */
   function showAddPerson() {
-    props.navigation.navigate('edit-one', { id: -1 });
+    props.navigation.navigate('edit-one', { id: -1, refreshList: fetchData });
   }
 
   /** Navigates to the Edit Person screen. */
   function showEditPerson(id) {
-    props.navigation.navigate('edit-one', { id: id });
+    props.navigation.navigate('edit-one', { id: id, refreshList: fetchData });
   }
 
   /** Navigates to the View Person screen. */

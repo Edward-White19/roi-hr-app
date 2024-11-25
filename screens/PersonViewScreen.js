@@ -57,7 +57,7 @@ export default function PersonViewScreen(props) {
   return (
     <RoiBackdrop>
       <Surface style={styles.surfaceHeader} elevation={5}>
-        <Text variant='displaySmall' style={styles.textHeader}>{person.name}</Text>
+        <Text variant='headlineSmall' style={styles.textHeader}>{person.name}</Text>
       </Surface>
       <ScrollView style={{ width: '100%' }} contentContainerStyle={styles.scrollMain}>
         <Surface
