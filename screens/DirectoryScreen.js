@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, FlatList } from 'react-native';
-import { Avatar, Button, Card, Dialog, FAB, IconButton, Menu, Portal, Surface, Text } from 'react-native-paper';
+import { Avatar, Button, Card, Dialog, FAB, IconButton, Portal, Surface, Text } from 'react-native-paper';
 import RoiHeader from '../components/RoiHeader';
 import RoiBackdrop from '../components/RoiBackdrop';
 import { View } from 'react-native-web';
@@ -28,24 +28,23 @@ export default function DirectoryScreen(props) {
   const [people, setPeople] = useState([]);
   const [offline, setOffline] = useState(false);
   const [error, setError] = useState(null);
-  const [profileMenuVisible, setProfileMenuVisible] = useState(false);
   const [deleteDialogVisible, setDeleteDialogVisible] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [selectedName, setSelectedName] = useState(null);
 
-  // Fetch the list of people.
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchPeople();
-        setPeople(data);
-      } catch (err) {
-        console.error(err);
-        setOffline(true);
-        setError("Unable to fetch data, offline mode");
-      }
-    };
+  // Fetches the list of all people.
+  const fetchData = async () => {
+    try {
+      const data = await fetchPeople();
+      setPeople(data);
+    } catch (err) {
+      console.error(err);
+      setOffline(true);
+      setError("Unable to fetch data, offline mode");
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -68,30 +67,15 @@ export default function DirectoryScreen(props) {
     }
   }
 
-  function showProfileMenu(id, name) {
-    setSelectedId(id);
-    setSelectedName(name);
-    setProfileMenuVisible(true);
-    console.log("Opened profile menu.");
-  }
-
-  function dismissProfileMenu() {
-    setProfileMenuVisible(false);
-    setSelectedId(null);
-    console.log("Dismissed profile menu.");
-  }
-
   function showDeleteDialog(id, name) {
     setSelectedId(id);
     setSelectedName(name);
     setDeleteDialogVisible(true);
-    console.log("Showed deletion dialog.");
   }
 
   function hideDeleteDialog() {
     setDeleteDialogVisible(false);
     setSelectedId(null);
-    console.log("Hid deletion dialog.");
   }
   // #endregion
 
@@ -126,23 +110,31 @@ export default function DirectoryScreen(props) {
         renderItem={({ item }) =>
           <Card
             key={item.id}
-            style={styles.surfaceProfile}
-            mode='elevated'
-            elevation={1}
+            contentStyle={styles.surfaceProfile}
             onPress={() => showViewPerson(item.id)}
           >
-            <Menu
-              visible={profileMenuVisible}
-              anchor={<IconButton
-                icon='dots-vertical'
+            {/* Icon and button section. */}
+            <View style={styles.viewProfileActions}>
+              <IconButton
+                icon='pencil'
                 size={32}
-                mode='contained'
-                style={styles.buttonProfileMeatballMenu}
-                onPress={() => showProfileMenu(item.id, item.name)}
-              />}
-              style={{ margin: 0, padding: 0 }}
-            >
-            </Menu>
+                mode='contained-tonal'
+                onPress={() => showEditPerson(item.id)}
+              >
+                View
+              </IconButton>
+              <IconButton
+                icon='delete'
+                size={32}
+                mode='contained-tonal'
+                onPress={() => {
+                  showDeleteDialog(item.id, item.name);
+                }}
+              >
+                View
+              </IconButton>
+            </View>
+
             {/* Text content section. */}
             <View style={styles.viewProfileContent}>
               <Text
@@ -155,7 +147,7 @@ export default function DirectoryScreen(props) {
               </Text>
               <Text
                 variant='titleMedium'
-                numberOfLines={2}
+                numberOfLines={1}
                 ellipsizeMode='clip'
                 style={{ width: '100%' }}
               >
@@ -189,8 +181,10 @@ export default function DirectoryScreen(props) {
         <Dialog visible={deleteDialogVisible} onDismiss={hideDeleteDialog}>
           <Dialog.Title>Confirm Deletion</Dialog.Title>
           <Dialog.Content>
-            <Text>Are you sure you want to delete?</Text>
-            <Text style={{ fontWeight: "bold" }}>{selectedName}</Text>
+            <Text>Are you sure you want to delete
+              <Text style={{ fontWeight: "bold" }}>{' ' + selectedName}</Text>
+              ?
+            </Text>
           </Dialog.Content>
           <Dialog.Actions>
             <Button onPress={hideDeleteDialog}>Cancel</Button>
@@ -215,6 +209,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   surfaceProfile: {
+    paddingVertical: 15,
     columnGap: 20,
     flexDirection: 'row-reverse',
     justifyContent: 'space-between',
@@ -223,7 +218,6 @@ const styles = StyleSheet.create({
   viewProfileContent: {
     width: 240,
     marginLeft: 15,
-    marginVertical: 15,
     paddingVertical: 5,
     rowGap: 15,
     flexDirection: 'column',
@@ -244,13 +238,6 @@ const styles = StyleSheet.create({
   },
   textProfileTitle: {
     fontWeight: 'bold',
-  },
-  buttonProfileMeatballMenu: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    margin: 0,
-    padding: 0,
   },
   fabAdd: {
     position: 'absolute',
