@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { ScrollView } from 'react-native-web';
-import { Avatar, Surface, Text } from 'react-native-paper';
+import { Avatar, Button, Surface, Text } from 'react-native-paper';
 import { colours } from '../styles/RoiStyle';
 import RoiBackdrop from '../components/RoiBackdrop';
 import { fetchDepartments, fetchPersonById } from '../utils/api';
@@ -71,6 +71,17 @@ export default function PersonViewScreen(props) {
           <PersonField label='State' value={person.state} />
           <PersonField label='Postcode' value={person.zip} />
           <PersonField label='Country' value={person.country} />
+
+          {/* Buttons */}
+          <View style={{ width: '100%' }}>
+            <Button
+              mode='contained'
+              icon="keyboard-return"
+              onPress={showDirectory}
+            >
+              Back
+            </Button>
+          </View>
         </Surface>
       </ScrollView>
     </RoiBackdrop>
