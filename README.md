@@ -1,5 +1,11 @@
 # Red Opal Innovations - HR Contact Management System
 
+_Project Assessment 2_ for the _**TAFE NSW** Mobile Apps_ stream.
+
+---
+
+## Introduction
+
 This is a mobile application for managing contact details of employees at _Red Opal Innovations_ (ROI). The application is currently a work-in-progress, and is not fully functional.
 
 This program and all its related material **strictly confidential**. Do not share this project with personnel outside of ROI staff and the application development team at _Gelos Enterprises_.
@@ -8,17 +14,17 @@ This program and all its related material **strictly confidential**. Do not shar
 
 ## Installation
 
-This program has been designed with React Native to run on _Android_ devices specifically.
+This program has been developed using _React Native_ to run on **Android** devices specifically.
 
-Since development is ongoing, the following instructions are intended for developer builds and execution on desktop devices only.
+Since development is ongoing, the following instructions are intended for developer builds and execution on **Desktop** devices only.
 
-#### Prerequisites
+### Prerequisites
 
 - Ensure that Node.js is installed and functions correctly.
-- Make sure your default web browser supports JavaScript. Disable or pause any extensions that may prevent JavaScript files from executing in the browser.
-- You must create a fork and clone the project to a local repository. This is not a centralised project.
+- Make sure your default web browser supports JavaScript.
+  - Remember to disable/pause any browser extensions that may prevent JavaScript files from executing.
 
-#### Instructions
+### Instructions
 
 From the root directory, run:
 
