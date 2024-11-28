@@ -9,6 +9,7 @@
 - [ ] Replaces references to [RoiStyle.colours](styles/RoiStyle.js) with theme
 - [ ] Update design to match prototype design
 - [ ] Consider moving POST and PUSH api calls to [DirectoryScreen](screens/DirectoryScreen.js)
+- [ ] Add text resizing functionality to [HelpScreen](screens/HelpScreen.js)
 
 ---
 
