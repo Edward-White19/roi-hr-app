@@ -43,7 +43,6 @@ export default function PersonEditScreen(props) {
     try {
       const data = await fetchPersonById(id);
       setPerson(data);
-      console.log(data);
     } catch (err) {
       console.error(err);
       setOffline(true);
@@ -55,7 +54,6 @@ export default function PersonEditScreen(props) {
     try {
       const data = await fetchDepartments();
       setDepartments(data);
-      console.log(data);
     } catch (err) {
       console.error(err);
       setOffline(true);

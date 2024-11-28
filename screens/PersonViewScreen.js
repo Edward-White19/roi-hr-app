@@ -1,10 +1,10 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { ScrollView } from 'react-native-web';
-import { Avatar, Button, Surface, Text } from 'react-native-paper';
+import { Button, Surface, Text } from 'react-native-paper';
 import { colours } from '../styles/RoiStyle';
 import RoiBackdrop from '../components/RoiBackdrop';
-import { fetchDepartments, fetchPersonById } from '../utils/api';
+import { fetchPersonById } from '../utils/api';
 import { useEffect } from 'react';
 import { useState } from 'react';
 
@@ -34,7 +34,6 @@ export default function PersonViewScreen(props) {
     try {
       const data = await fetchPersonById(id);
       setPerson(data);
-      console.log(data);
     } catch (err) {
       console.error(err);
       setOffline(true);
