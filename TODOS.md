@@ -11,6 +11,8 @@
 - [ ] Update design to match prototype design
 - [ ] Replace placeholder content in [HelpScreen](screens/HelpScreen.js) with original text.
 - [ ] Consider moving POST and PUSH api calls to [DirectoryScreen](screens/DirectoryScreen.js)
+- [ ] Implement offline mode.
+- [ ] Set all text to use the 'Trebuchet MS' font family.
 
 ---
 
