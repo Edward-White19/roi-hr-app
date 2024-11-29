@@ -1,8 +1,7 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { ScrollView } from 'react-native-web';
-import { Button, Surface, Text } from 'react-native-paper';
-import { colours } from '../styles/RoiStyle';
+import { Button, Surface, Text, useTheme } from 'react-native-paper';
 import RoiBackdrop from '../components/RoiBackdrop';
 import { fetchPersonById } from '../utils/api';
 import { useEffect } from 'react';
@@ -15,6 +14,8 @@ import RoiHeader from '../components/RoiHeader';
 export default function PersonViewScreen(props) {
   /** ID of the person to view. */
   const { id } = props.route.params;
+  /** Material UI theme. */
+  const theme = useTheme();
 
   // #region Database Fetch
   const [person, setPerson] = useState({
@@ -62,13 +63,13 @@ export default function PersonViewScreen(props) {
           style={styles.surfaceContent}
           elevation={1}
         >
-          <PersonField label='Department' value={person.Department.name} />
-          <PersonField label='Phone' value={person.phone} />
-          <PersonField label='Street' value={person.street} />
-          <PersonField label='City' value={person.city} />
-          <PersonField label='State' value={person.state} />
-          <PersonField label='Postcode' value={person.zip} />
-          <PersonField label='Country' value={person.country} />
+          <PersonField theme={theme} label='Department' value={person.Department.name} />
+          <PersonField theme={theme} label='Phone' value={person.phone} />
+          <PersonField theme={theme} label='Street' value={person.street} />
+          <PersonField theme={theme} label='City' value={person.city} />
+          <PersonField theme={theme} label='State' value={person.state} />
+          <PersonField theme={theme} label='Postcode' value={person.zip} />
+          <PersonField theme={theme} label='Country' value={person.country} />
 
           {/* Buttons */}
           <View style={{ width: '100%' }}>
@@ -87,10 +88,10 @@ export default function PersonViewScreen(props) {
 }
 
 /** Information entry. */
-function PersonField({ label, value }) {
+function PersonField({ label, value, theme }) {
   return (
     <View>
-      <Text variant='labelLarge' style={styles.textFieldHeader}>{label}</Text>
+      <Text variant='labelLarge' style={{ ...styles.textFieldHeader, color: theme.colors.primary }}>{label}</Text>
       <Text variant='titleLarge' style={styles.textFieldBody}>{value}</Text>
     </View>
   );
@@ -117,7 +118,6 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     textAlignVertical: 'top',
     fontWeight: 'bold',
-    color: colours.red,
   },
   textFieldBody: {
     textAlign: 'left',

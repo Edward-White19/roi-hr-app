@@ -1,16 +1,18 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
-import { Surface, Text } from 'react-native-paper';
+import { Surface, Text, useTheme } from 'react-native-paper';
 import RoiHeader from '../components/RoiHeader';
 import { ScrollView } from 'react-native-web';
 import RoiBackdrop from '../components/RoiBackdrop';
-import { colours } from '../styles/RoiStyle';
 
 /**
  * Help screen, providing support for the user in
  * understanding the application and how it works.
 */
 export default function HelpScreen(props) {
+  /** Material UI theme. */
+  const theme = useTheme();
+
   return (
     <RoiBackdrop>
       <RoiHeader title='Help' />
@@ -23,7 +25,7 @@ export default function HelpScreen(props) {
               style={styles.surfaceSection}
               elevation={1}
             >
-              <Text variant='headlineMedium' style={styles.textSectionHeader}>{header}</Text>
+              <Text variant='headlineMedium' style={{ ...styles.textSectionHeader, color: theme.colors.primary }}>{header}</Text>
               <Text variant='bodyLarge' style={styles.textSectionBody}>{body}</Text>
             </Surface>
           ))
@@ -82,7 +84,6 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     textAlignVertical: 'top',
     fontWeight: 'bold',
-    color: colours.red,
   },
   textSectionBody: {
     textAlign: 'left',
