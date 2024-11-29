@@ -16,6 +16,7 @@
 ## Design Report & Demonstration
 
 - [ ] Finalise prototype design
+  - [ ] Update icons to match frontend.
 - [ ] Send email requesting feedback for prototype
 - [ ] Rewrite screen specifications for currency
 - [ ] Fill details regarding use of VCS (Git)
