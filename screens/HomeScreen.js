@@ -1,8 +1,9 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
-import { Surface, Text } from 'react-native-paper';
+import { StyleSheet } from 'react-native'
+import { Divider, Surface, Text } from 'react-native-paper';
 import RoiLogo from '../components/RoiLogo';
 import RoiBackdrop from '../components/RoiBackdrop';
+import { View } from 'react-native-web';
 
 /** Initial screen, greeting the user. */
 export default function HomeScreen(props) {
@@ -13,6 +14,11 @@ export default function HomeScreen(props) {
         <Text variant='displayMedium' style={styles.textTitle}>
           HR Contact Management System
         </Text>
+        <Divider horizontalInset={true} style={{ width: '100%' }} />
+        <View style={styles.viewCopyright}>
+          <Text variant='bodySmall' style={styles.textCopyright}>Developed by Edward White</Text>
+          <Text variant='bodySmall' style={styles.textCopyright}>Red Opal Innovations © 2024</Text>
+        </View>
       </Surface>
     </RoiBackdrop>
   )
@@ -30,8 +36,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  viewCopyright: {
+    rowGap: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   textTitle: {
     textAlign: 'center',
-    fontWeight: 'bold',
+  },
+  textCopyright: {
+    textAlign: 'center',
   }
 });
