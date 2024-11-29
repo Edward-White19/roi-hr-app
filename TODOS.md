@@ -4,8 +4,8 @@
 
 ## Frontend
 
-- [ ] Update theme colours
-  - [ ] Use only one theme
+- [x] Update theme colours
+  - [x] Use only one theme
 - [ ] Replaces references to [RoiStyle.colours](styles/RoiStyle.js) with theme
 - [ ] Update design to match prototype design
 - [ ] Consider moving POST and PUSH api calls to [DirectoryScreen](screens/DirectoryScreen.js)

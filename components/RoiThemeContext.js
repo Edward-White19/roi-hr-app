@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
+import roiCoreTheme from "../themes/roi-core.json";
 import roiLightTheme from "../themes/roi-light.json";
 import roiDarkTheme from "../themes/roi-dark.json";
 
@@ -16,7 +17,8 @@ export const RoiThemeProvider = ({ children }) => {
   };
 
   // Get theme values.
-  const theme = (isDark) ? roiDarkTheme : roiLightTheme;
+  //const theme = (isDark) ? roiDarkTheme : roiLightTheme;
+  const theme = roiCoreTheme;
 
   // Return component.
   return (
