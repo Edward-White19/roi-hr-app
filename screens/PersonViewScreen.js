@@ -7,6 +7,7 @@ import RoiBackdrop from '../components/RoiBackdrop';
 import { fetchPersonById } from '../utils/api';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import RoiHeader from '../components/RoiHeader';
 
 /**
  * Screen for viewing details of a staff member.
@@ -55,9 +56,7 @@ export default function PersonViewScreen(props) {
 
   return (
     <RoiBackdrop>
-      <Surface style={styles.surfaceHeader} elevation={5}>
-        <Text variant='headlineSmall' style={styles.textHeader}>{person.name}</Text>
-      </Surface>
+      <RoiHeader title={person.name} personView={true} />
       <ScrollView style={{ width: '100%' }} contentContainerStyle={styles.scrollMain}>
         <Surface
           style={styles.surfaceContent}
@@ -106,13 +105,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
-  surfaceHeader: {
-    width: '100%',
-    padding: 20,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
   surfaceContent: {
     width: '100%',
     padding: 20,
@@ -120,9 +112,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'flex-start',
-  },
-  textHeader: {
-    fontWeight: 'bold',
   },
   textFieldHeader: {
     textAlign: 'left',
