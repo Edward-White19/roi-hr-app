@@ -7,16 +7,16 @@
 - [x] Update theme colours
   - [x] Use only one theme
 - [x] Replaces references to [RoiStyle.colours](styles/RoiStyle.js) with theme
-- [ ] Update design to match prototype design
+- [x] Update design to match prototype design
 - [ ] Consider moving POST and PUSH api calls to [DirectoryScreen](screens/DirectoryScreen.js)
-- [ ] Add text resizing functionality to [HelpScreen](screens/HelpScreen.js)
+- [x] Add text resizing functionality to [HelpScreen](screens/HelpScreen.js)
 
 ---
 
 ## Design Report & Demonstration
 
 - [ ] Finalise prototype design
-  - [ ] Update icons to match frontend.
+  - [x] Update icons to match frontend.
 - [ ] Send email requesting feedback for prototype
 - [ ] Rewrite screen specifications for currency
 - [ ] Fill details regarding use of VCS (Git)
