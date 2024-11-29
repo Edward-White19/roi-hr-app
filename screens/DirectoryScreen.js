@@ -104,7 +104,7 @@ export default function DirectoryScreen(props) {
             <View style={styles.viewProfileActions}>
               <IconButton
                 icon='pencil'
-                size={32}
+                size={26}
                 mode='contained-tonal'
                 onPress={() => showEditPerson(item.id)}
               >
@@ -112,7 +112,7 @@ export default function DirectoryScreen(props) {
               </IconButton>
               <IconButton
                 icon='delete'
-                size={32}
+                size={26}
                 mode='contained-tonal'
                 onPress={() => {
                   showDeleteDialog(item.id, item.name);
@@ -159,7 +159,7 @@ export default function DirectoryScreen(props) {
         icon='plus'
         size='medium'
         mode='elevated'
-        variant='tertiary'
+        variant='secondary'
         onPress={() => showAddPerson()}
       />
 
