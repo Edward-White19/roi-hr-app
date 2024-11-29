@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import { StyleSheet } from 'react-native'
+import { ScrollView, StyleSheet, View } from 'react-native'
 import { SegmentedButtons, Surface, Text, useTheme } from 'react-native-paper';
 import RoiHeader from '../components/RoiHeader';
-import { ScrollView } from 'react-native-web';
 import RoiBackdrop from '../components/RoiBackdrop';
 
 /**
@@ -24,18 +23,24 @@ export default function HelpScreen(props) {
 
       {/* Font Size Setting */}
       <Surface elevation={1} style={styles.surfaceSizeSetting}>
-        <Text
-          variant='bodySmall'
-          style={{
-            ...styles.textSizeSettingLabel,
-            fontSize: size.body,
-            lineHeight: size.body + 8,
-          }}
-        >Text Size</Text>
+        {/* Label */}
+        <View style={styles.viewSizeSettingLabel}>
+          <Text
+            variant='bodySmall'
+            style={{
+              ...styles.textSizeSettingLabel,
+              fontSize: size.body,
+              lineHeight: size.body + 8,
+            }}
+          >Text Size</Text>
+        </View>
+
+        {/* Buttons */}
         <SegmentedButtons
           value={fontSize}
           onValueChange={setFontSize}
           style={styles.segmentedButtonsSizeSetting}
+          density='medium'
           buttons={[
             { value: 0, label: 'Small' },
             { value: 1, label: 'Normal' },
@@ -54,6 +59,7 @@ export default function HelpScreen(props) {
               style={styles.surfaceSection}
               elevation={1}
             >
+              {/* Header */}
               <Text
                 variant='headlineMedium'
                 style={{
@@ -63,6 +69,8 @@ export default function HelpScreen(props) {
                   lineHeight: size.header + 8,
                 }}
               >{header}</Text>
+
+              {/* Body */}
               <Text
                 variant='bodyLarge'
                 style={{
@@ -118,15 +126,22 @@ const pageContent = [
 const styles = StyleSheet.create({
   surfaceSizeSetting: {
     width: '100%',
-    height: 118,
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+    paddingTop: 15,
     rowGap: 10,
     flexDirection: 'column',
     justifyContent: 'flex-end',
     alignItems: 'flex-start',
   },
+  viewSizeSettingLabel: {
+    width: '100%',
+    height: 20,
+    justifyContent: 'center',
+  },
   segmentedButtonsSizeSetting: {
     width: '100%',
+    minWidth: 240,
     maxWidth: 500,
   },
   scrollMain: {
