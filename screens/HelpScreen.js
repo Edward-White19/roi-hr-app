@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { StyleSheet } from 'react-native'
-import { SegmentedButtons, Surface, Text, useTheme } from 'react-native-paper';
+import { StyleSheet, View } from 'react-native'
+import { Banner, SegmentedButtons, Surface, Text, useTheme } from 'react-native-paper';
 import RoiHeader from '../components/RoiHeader';
 import { ScrollView } from 'react-native-web';
 import RoiBackdrop from '../components/RoiBackdrop';
@@ -12,10 +12,12 @@ import RoiBackdrop from '../components/RoiBackdrop';
 export default function HelpScreen(props) {
   /** Material UI theme. */
   const theme = useTheme();
-  /** State for text size parameter. */
-  const [fontSize, setFontSize] = useState(1);
-  /** Text header and body font size. */
-  const size = textSizeSets[fontSize];
+  /** State for font size setting banner being visible. */
+  const [fontSizeBannerVisible, setFontSizeBannerVisible] = useState(true);
+  /** State for font size parameter. */
+  const [fontSizeLevel, setFontSizeLevel] = useState(1);
+  /** Font header and body size. */
+  const fontSize = fontSizeSets[fontSizeLevel];
 
   return (
     <RoiBackdrop>
@@ -23,29 +25,45 @@ export default function HelpScreen(props) {
       <RoiHeader title='Help' />
 
       {/* Font Size Setting */}
-      <Surface elevation={1} style={styles.surfaceSizeSetting}>
-        <Text
-          variant='bodySmall'
-          style={{
-            ...styles.textSizeSettingLabel,
-            fontSize: size.body,
-            lineHeight: size.body + 8,
-          }}
-        >Text Size</Text>
-        <SegmentedButtons
-          value={fontSize}
-          onValueChange={setFontSize}
-          style={styles.segmentedButtonsSizeSetting}
-          buttons={[
-            { value: 0, label: 'Small' },
-            { value: 1, label: 'Normal' },
-            { value: 2, label: 'Large' }
-          ]}
-        />
-      </Surface>
+      <Banner
+        elevation={1}
+        style={styles.bannerSizeSetting}
+        visible={fontSizeBannerVisible}
+      >
+        <View style={styles.viewSizeSetting}>
+          <Text
+            variant='bodySmall'
+            style={{
+              ...styles.textSizeSettingLabel,
+              fontSize: fontSize.body,
+              lineHeight: fontSize.body + 8,
+            }}
+          >Font Size</Text>
+          <SegmentedButtons
+            value={fontSizeLevel}
+            onValueChange={setFontSizeLevel}
+            style={styles.segmentedButtonsSizeSetting}
+            density='medium'
+            buttons={[
+              { value: 0, label: 'Small' },
+              { value: 1, label: 'Normal' },
+              { value: 2, label: 'Large' }
+            ]}
+          />
+        </View>
+      </Banner>
 
       {/* Scrollable Help Information */}
-      <ScrollView style={{ width: '100%' }} contentContainerStyle={styles.scrollMain}>
+      <ScrollView
+        style={{ width: '100%' }}
+        contentContainerStyle={styles.scrollMain}
+        scrollEventThrottle={16}
+        onScroll={(event) => {
+          const newOffset = event.nativeEvent.contentOffset.y;
+          console.log(newOffset);
+          //this.offset = newOffset;
+        }}
+      >
         {
           // Generate content sections.
           pageContent.map(({ header, body }, index) => (
@@ -59,16 +77,16 @@ export default function HelpScreen(props) {
                 style={{
                   ...styles.textSectionHeader,
                   color: theme.colors.primary,
-                  fontSize: size.header,
-                  lineHeight: size.header + 8,
+                  fontSize: fontSize.header,
+                  lineHeight: fontSize.header + 8,
                 }}
               >{header}</Text>
               <Text
                 variant='bodyLarge'
                 style={{
                   ...styles.textSectionBody,
-                  fontSize: size.body,
-                  lineHeight: size.body + 8,
+                  fontSize: fontSize.body,
+                  lineHeight: fontSize.body + 8,
                 }}
               >{body}</Text>
             </Surface>
@@ -79,8 +97,8 @@ export default function HelpScreen(props) {
   )
 }
 
-/** Text header and body font sizes. */
-const textSizeSets = [
+/** Font header and body sizes. */
+const fontSizeSets = [
   { header: 24, body: 14 },
   { header: 28, body: 16 },
   { header: 32, body: 20 }
@@ -116,10 +134,19 @@ const pageContent = [
 
 /** Stylesheet. */
 const styles = StyleSheet.create({
-  surfaceSizeSetting: {
+  bannerSizeSetting: {
     width: '100%',
-    height: 118,
-    padding: 20,
+    height: 105,
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+    paddingTop: 15,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  viewSizeSetting: {
+    width: '100%',
+    height: '100%',
     rowGap: 10,
     flexDirection: 'column',
     justifyContent: 'flex-end',
