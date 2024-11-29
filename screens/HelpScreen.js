@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
-import { SegmentedButtons, Surface, Text, useTheme } from 'react-native-paper';
+import { SegmentedButtons, Surface, useTheme } from 'react-native-paper';
 import RoiHeader from '../components/RoiHeader';
 import RoiBackdrop from '../components/RoiBackdrop';
+import Text from '../components/Text';
 
 /**
  * Help screen, providing support for the user in
@@ -26,12 +27,9 @@ export default function HelpScreen(props) {
         {/* Label */}
         <View style={styles.viewSizeSettingLabel}>
           <Text
-            variant='bodySmall'
-            style={{
-              ...styles.textSizeSettingLabel,
-              fontSize: size.body,
-              lineHeight: size.body + 8,
-            }}
+            variant='bodyLarge'
+            fontWeight='bold'
+            fontSize={size.body}
           >Text Size</Text>
         </View>
 
@@ -64,10 +62,9 @@ export default function HelpScreen(props) {
                 variant='headlineMedium'
                 style={{
                   ...styles.textSectionHeader,
-                  color: theme.colors.primary,
-                  fontSize: size.header,
-                  lineHeight: size.header + 8,
                 }}
+                fontSize={size.header}
+                color={theme.colors.primary}
               >{header}</Text>
 
               {/* Body */}
@@ -91,7 +88,7 @@ export default function HelpScreen(props) {
 const textSizeSets = [
   { header: 24, body: 14 },
   { header: 28, body: 16 },
-  { header: 32, body: 20 }
+  { header: 32, body: 18 }
 ];
 
 /**
