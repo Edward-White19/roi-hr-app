@@ -1,12 +1,13 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { ScrollView } from 'react-native-web';
-import { Button, Surface, Text, useTheme } from 'react-native-paper';
+import { Button, Surface, useTheme } from 'react-native-paper';
 import RoiBackdrop from '../components/RoiBackdrop';
 import { fetchPersonById } from '../utils/api';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import RoiHeader from '../components/RoiHeader';
+import Text, { fonts } from '../components/Text';
 
 /**
  * Screen for viewing details of a staff member.
@@ -72,11 +73,13 @@ export default function PersonViewScreen(props) {
           <PersonField theme={theme} label='Country' value={person.country} />
 
           {/* Buttons */}
-          <View style={{ width: '100%' }}>
+          <View style={styles.viewButton}>
             <Button
               mode='contained'
-              icon="keyboard-return"
+              icon='keyboard-return'
               onPress={showDirectory}
+              style={styles.buttonAction}
+              labelStyle={fonts.trebuchetMS}
             >
               Back
             </Button>
@@ -90,9 +93,17 @@ export default function PersonViewScreen(props) {
 /** Information entry. */
 function PersonField({ label, value, theme }) {
   return (
-    <View>
-      <Text variant='labelLarge' style={{ ...styles.textFieldHeader, color: theme.colors.primary }}>{label}</Text>
-      <Text variant='titleLarge' style={styles.textFieldBody}>{value}</Text>
+    <View style={styles.viewField}>
+      <Text
+        variant='labelLarge'
+        style={{ ...styles.textFieldHeader }}
+        color={theme.colors.primary}
+        fontWeight='bold'
+      >{label}</Text>
+      <Text
+        variant='titleLarge'
+        style={styles.textFieldBody}
+      >{value}</Text>
     </View>
   );
 }
@@ -114,14 +125,28 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
   },
+  viewButton: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignContent: 'flex-start',
+  },
+  buttonAction: {
+    width: '100%',
+    minWidth: 120,
+  },
+  viewField: {
+    flexDirection: 'column',
+    rowGap: 4,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+  },
   textFieldHeader: {
     textAlign: 'left',
     textAlignVertical: 'top',
-    fontWeight: 'bold',
   },
   textFieldBody: {
     textAlign: 'left',
     textAlignVertical: 'top',
-    fontWeight: 'normal',
   }
 });
