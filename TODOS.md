@@ -13,6 +13,7 @@
 - [ ] Replace placeholder content in [HelpScreen](screens/HelpScreen.js) with original text.
 - [ ] Consider moving POST and PUSH api calls to [DirectoryScreen](screens/DirectoryScreen.js)
 - [ ] Implement offline mode.
+- [ ] Make buttons rounder.
 
 ---
 
@@ -20,7 +21,7 @@
 
 - [x] Finalise prototype design
   - [x] Update icons to match frontend.
-- [ ] Send email requesting feedback for prototype
+- [x] Send email requesting feedback for prototype
 - [ ] Rewrite screen specifications for currency
 - [ ] Fill details regarding use of VCS (Git)
 - [ ] Send email requesting feedback for design report
