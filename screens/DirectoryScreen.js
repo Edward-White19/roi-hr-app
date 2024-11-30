@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, FlatList } from 'react-native';
-import { Button, Card, Dialog, FAB, IconButton, Portal, Text } from 'react-native-paper';
+import { Button, Card, Dialog, FAB, IconButton, Portal } from 'react-native-paper';
 import RoiHeader from '../components/RoiHeader';
 import RoiBackdrop from '../components/RoiBackdrop';
 import { View } from 'react-native-web';
 import { deletePerson, fetchPeople } from '../utils/api';
+import Text, { fonts } from '../components/Text';
 
 /**
  * Screen for viewing the Staff Contact Directory.
@@ -104,7 +105,7 @@ export default function DirectoryScreen(props) {
             <View style={styles.viewProfileActions}>
               <IconButton
                 icon='pencil'
-                size={26}
+                size={24}
                 mode='contained-tonal'
                 onPress={() => showEditPerson(item.id)}
               >
@@ -112,7 +113,7 @@ export default function DirectoryScreen(props) {
               </IconButton>
               <IconButton
                 icon='delete'
-                size={26}
+                size={24}
                 mode='contained-tonal'
                 onPress={() => {
                   showDeleteDialog(item.id, item.name);
@@ -128,7 +129,7 @@ export default function DirectoryScreen(props) {
                 variant='headlineSmall'
                 numberOfLines={1}
                 ellipsizeMode='clip'
-                style={styles.textProfileTitle}
+                fontWeight='bold'
               >
                 {item.name}
               </Text>
@@ -136,7 +137,6 @@ export default function DirectoryScreen(props) {
                 variant='titleMedium'
                 numberOfLines={1}
                 ellipsizeMode='clip'
-                style={{ width: '100%' }}
               >
                 {item.Department.name}
               </Text>
@@ -166,16 +166,16 @@ export default function DirectoryScreen(props) {
       {/* Dialog for delete confirmation */}
       <Portal>
         <Dialog visible={deleteDialogVisible} onDismiss={hideDeleteDialog}>
-          <Dialog.Title>Confirm Deletion</Dialog.Title>
+          <Dialog.Title style={fonts.trebuchetMS}>Confirm Deletion</Dialog.Title>
           <Dialog.Content>
             <Text>Are you sure you want to delete
-              <Text style={{ fontWeight: "bold" }}>{' ' + selectedName}</Text>
+              <Text fontWeight='bold'>{' ' + selectedName}</Text>
               ?
             </Text>
           </Dialog.Content>
           <Dialog.Actions>
-            <Button onPress={hideDeleteDialog}>Cancel</Button>
-            <Button onPress={handleDelete}>Delete</Button>
+            <Button onPress={hideDeleteDialog} labelStyle={fonts.trebuchetMS}>Cancel</Button>
+            <Button onPress={handleDelete} labelStyle={fonts.trebuchetMS}>Delete</Button>
           </Dialog.Actions>
         </Dialog>
       </Portal>
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     columnGap: 20,
     flexDirection: 'row-reverse',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    alignItems: 'center',
   },
   viewProfileContent: {
     width: 240,
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     rowGap: 15,
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'flex-start',
   },
   viewProfileActions: {
@@ -217,14 +217,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
-  },
-  viewProfileButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  textProfileTitle: {
-    fontWeight: 'bold',
   },
   fabAdd: {
     position: 'absolute',
