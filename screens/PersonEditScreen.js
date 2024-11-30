@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { View, StyleSheet, ScrollView } from 'react-native'
-import { Button, Surface, Text, TextInput } from 'react-native-paper';
+import { View, StyleSheet, ScrollView, useWindowDimensions } from 'react-native'
+import { Button, Surface, TextInput, useTheme } from 'react-native-paper';
 import { addPerson, fetchDepartments, fetchPersonById, updatePerson } from '../utils/api';
 import { Dropdown } from 'react-native-paper-dropdown';
 import RoiBackdrop from '../components/RoiBackdrop';
 import RoiHeader from '../components/RoiHeader';
+import Text, { fonts } from '../components/Text';
 
 /**
  * Screen for editing the details of a staff member, or adding a new staff member.
@@ -16,6 +17,12 @@ export default function PersonEditScreen(props) {
   const { id, refreshList } = props.route.params;
   /** Whether the page is in Edit or Add mode. */
   const isEditMode = (id >= 0);
+  /** Material theme. */
+  const { colors } = useTheme();
+  /** Field width, since the dropdown refuses to cooperate. */
+  const fieldWidth = useWindowDimensions().width - 40;
+  /** Style to use across all fields for dimensions. */
+  const fieldStyle = { width: fieldWidth, backgroundColor: colors.elevation.level1 };
 
   // #region States
   const [person, setPerson] = useState({
@@ -98,19 +105,22 @@ export default function PersonEditScreen(props) {
       <ScrollView style={{ width: '100%' }} contentContainerStyle={styles.scrollMain}>
         <Surface elevation={1} style={styles.surfaceContent}>
           <View style={styles.viewContent}>
+            {/* Name */}
             <TextInput
-              label="Name"
+              label={<Text>Name</Text>}
               value={person.name}
               placeholder='e.g. Jenny Smith'
               onChangeText={(text) => setPerson({ ...person, name: text })}
-              mode="outlined"
               keyboardType='default'
               textContentType='name'
-              style={styles.inputField}
+              mode='outlined'
+              style={fieldStyle}
+              contentStyle={fonts.trebuchetMS}
             />
+
+            {/* Department */}
             <Dropdown
-              label="Department"
-              mode="outlined"
+              label={<Text>Department</Text>}
               value={person.departmentId}
               placeholder='Select Department...'
               onSelect={(id) => setPerson({ ...person, departmentId: id })}
@@ -118,91 +128,121 @@ export default function PersonEditScreen(props) {
                 label: department.name,
                 value: department.id,
               }))}
-              menuContentStyle={styles.inputField}
+              CustomDropdownInput={({ placeholder, selectedLabel, rightIcon }) => (
+                <TextInput
+                  label={<Text>Department</Text>}
+                  value={selectedLabel}
+                  placeholder={placeholder}
+                  right={rightIcon}
+                  mode='outlined'
+                  style={fieldStyle}
+                  contentStyle={fonts.trebuchetMS}
+                />
+              )}
+              hideMenuHeader={true}
+              mode='outlined'
+              menuContentStyle={{ backgroundColor: colors.elevation.level2 }}
             />
+
+            {/* Phone */}
             <TextInput
-              label="Phone"
+              label={<Text>Phone</Text>}
               value={person.phone}
               placeholder='01 2345 6789'
               onChangeText={(text) => setPerson({ ...person, phone: text })}
-              mode="outlined"
-              keyboardType="numeric"
+              keyboardType='numeric'
               textContentType='telephoneNumber'
-              style={styles.inputField}
+              mode='outlined'
+              style={fieldStyle}
+              contentStyle={fonts.trebuchetMS}
             />
+
+            {/* Street */}
             <TextInput
-              label="Street"
+              label={<Text>Street</Text>}
               value={person.street}
               placeholder='e.g. 25 Paprika Street'
               onChangeText={(text) => setPerson({ ...person, street: text })}
-              mode="outlined"
               keyboardType='default'
               textContentType='streetAddressLine1'
-              style={styles.inputField}
+              mode='outlined'
+              style={fieldStyle}
+              contentStyle={fonts.trebuchetMS}
             />
+
+            {/* City */}
             <TextInput
-              label="City"
+              label={<Text>City</Text>}
               value={person.city}
               placeholder='e.g. Sydney'
               onChangeText={(text) => setPerson({ ...person, city: text })}
-              mode="outlined"
               keyboardType='default'
               textContentType='addressCity'
-              style={styles.inputField}
+              mode='outlined'
+              style={fieldStyle}
+              contentStyle={fonts.trebuchetMS}
             />
+
+            {/* State */}
             <TextInput
-              label="State"
+              label={<Text>State</Text>}
               value={person.state}
               placeholder='e.g. NSW'
               onChangeText={(text) => setPerson({ ...person, state: text })}
-              mode="outlined"
               keyboardType='default'
               textContentType='addressState'
-              style={styles.inputField}
+              mode='outlined'
+              style={fieldStyle}
+              contentStyle={fonts.trebuchetMS}
             />
+
+            {/* Postcode */}
             <TextInput
-              label="Postcode"
+              label={<Text>Postcode</Text>}
               value={person.zip}
               placeholder='0000'
               onChangeText={(text) => setPerson({ ...person, zip: text })}
-              mode="outlined"
-              keyboardType="numeric"
+              keyboardType='numeric'
               textContentType='postalCode'
-              style={styles.inputField}
+              mode='outlined'
+              style={fieldStyle}
+              contentStyle={fonts.trebuchetMS}
             />
+
+            {/* Country */}
             <TextInput
-              label="Country"
+              label={<Text>Country</Text>}
               value={person.country}
               placeholder='e.g. Australia'
               onChangeText={(text) => setPerson({ ...person, country: text })}
-              mode="outlined"
               keyboardType='default'
               textContentType='countryName'
-              style={styles.inputField}
+              mode='outlined'
+              style={fieldStyle}
+              contentStyle={fonts.trebuchetMS}
             />
 
             {/* Buttons */}
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                padding: 10,
-              }}
-            >
-              <View style={{ flex: 1, marginHorizontal: 10 }}>
-                <Button
-                  mode="outlined"
-                  icon="keyboard-return"
-                  onPress={showDirectory}
-                >
-                  Cancel
-                </Button>
-              </View>
-              <View style={{ flex: 1, marginHorizontal: 10 }}>
-                <Button mode="contained" icon="update" onPress={handleSubmit}>
-                  Submit
-                </Button>
-              </View>
+            <View style={styles.viewButtons}>
+              <Button
+                mode='outlined'
+                icon='keyboard-return'
+                style={styles.buttonActions}
+                labelStyle={fonts.trebuchetMS}
+                onPress={showDirectory}
+              >
+                Cancel
+              </Button>
+
+              <Button
+                mode='contained-tonal'
+                icon='check'
+                style={styles.buttonActions}
+                labelStyle={fonts.trebuchetMS}
+                onPress={handleSubmit}
+              >
+                Submit
+              </Button>
             </View>
 
           </View>
@@ -233,7 +273,15 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
   },
-  inputField: {
+  viewButtons: {
     width: '100%',
+    columnGap: 20,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignContent: 'flex-start',
+  },
+  buttonActions: {
+    flex: 1,
+    minWidth: 120,
   },
 });
