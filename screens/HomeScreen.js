@@ -1,9 +1,10 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
-import { Divider, Surface, Text } from 'react-native-paper';
+import { Divider, Surface } from 'react-native-paper';
 import RoiLogo from '../components/RoiLogo';
 import RoiBackdrop from '../components/RoiBackdrop';
 import { View } from 'react-native-web';
+import Text from '../components/Text';
 
 /** Initial screen, greeting the user. */
 export default function HomeScreen(props) {
@@ -43,6 +44,7 @@ const styles = StyleSheet.create({
   },
   textTitle: {
     textAlign: 'center',
+    fontWeight: 'bold',
   },
   textCopyright: {
     textAlign: 'center',
