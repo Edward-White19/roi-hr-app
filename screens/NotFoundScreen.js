@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, Surface } from "react-native-paper";
+import { Surface } from "react-native-paper";
+import Text from '../components/Text';
 
 export default function NotFoundScreen(props) {
   return (
