@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, View } from 'react-native'
 import { SegmentedButtons, Surface, useTheme } from 'react-native-paper';
 import RoiHeader from '../components/RoiHeader';
 import RoiBackdrop from '../components/RoiBackdrop';
-import Text from '../components/Text';
+import Text, { fonts } from '../components/Text';
 
 /**
  * Help screen, providing support for the user in
@@ -40,9 +40,9 @@ export default function HelpScreen(props) {
           style={styles.segmentedButtonsSizeSetting}
           density='medium'
           buttons={[
-            { value: 0, label: 'Small' },
-            { value: 1, label: 'Normal' },
-            { value: 2, label: 'Large' }
+            { value: 0, label: 'Small', labelStyle: fonts.trebuchetMS },
+            { value: 1, label: 'Normal', labelStyle: fonts.trebuchetMS },
+            { value: 2, label: 'Large', labelStyle: fonts.trebuchetMS }
           ]}
         />
       </Surface>
@@ -60,20 +60,19 @@ export default function HelpScreen(props) {
               {/* Header */}
               <Text
                 variant='headlineMedium'
+                fontSize={size.header}
+                color={theme.colors.primary}
                 style={{
                   ...styles.textSectionHeader,
                 }}
-                fontSize={size.header}
-                color={theme.colors.primary}
               >{header}</Text>
 
               {/* Body */}
               <Text
                 variant='bodyLarge'
+                fontSize={size.body}
                 style={{
                   ...styles.textSectionBody,
-                  fontSize: size.body,
-                  lineHeight: size.body + 8,
                 }}
               >{body}</Text>
             </Surface>

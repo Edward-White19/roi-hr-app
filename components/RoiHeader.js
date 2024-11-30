@@ -1,7 +1,8 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Surface, Text } from 'react-native-paper';
+import { Surface } from 'react-native-paper';
 import RoiLogo from './RoiLogo';
+import Text from './Text';
 
 /**
  * Header at the top of the page, with (or without) the ROI logo.
