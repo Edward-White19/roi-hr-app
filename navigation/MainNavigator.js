@@ -19,7 +19,7 @@ export default function MainNavigator() {
         name='home'
         component={HomeScreen}
         options={{
-          tabBarLabel: <Text variant='labelMedium'>Home</Text>,
+          tabBarLabel: <Text>Home</Text>,
           tabBarIcon: ({ color }) => (
             <MaterialIcons name='home' color={color} size={iconSize} style={{ top: -4 }} />
           ),
@@ -29,7 +29,7 @@ export default function MainNavigator() {
         name='directory'
         component={DirectoryNavigator}
         options={{
-          tabBarLabel: <Text variant='labelMedium'>View</Text>,
+          tabBarLabel: <Text>View</Text>,
           tabBarIcon: ({ color }) => (
             <MaterialIcons name='people-alt' color={color} size={iconSize} style={{ top: -4 }} />
           ),
@@ -39,7 +39,7 @@ export default function MainNavigator() {
         name='help'
         component={HelpScreen}
         options={{
-          tabBarLabel: <Text variant='labelMedium'>Help</Text>,
+          tabBarLabel: <Text>Help</Text>,
           tabBarIcon: ({ color }) => (
             <MaterialIcons name='question-mark' color={color} size={iconSize} style={{ top: -4 }} />
           ),
