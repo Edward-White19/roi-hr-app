@@ -11,9 +11,9 @@
 - [x] Update design to match prototype design
 - [x] Set all text to use the 'Trebuchet MS' font family
 - [x] Make buttons rounder
+- [x] Implement "loading" overlay
 - [ ] Replace placeholder content in [HelpScreen](screens/HelpScreen.js) with original text
 - [ ] Implement offline mode
-- [ ] Implement "loading" overlay
 
 ---
 

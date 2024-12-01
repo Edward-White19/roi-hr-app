@@ -1,13 +1,11 @@
-import React from 'react'
-import { View, StyleSheet } from 'react-native'
-import { ScrollView } from 'react-native-web';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, ScrollView } from 'react-native'
 import { Button, Surface, useTheme } from 'react-native-paper';
-import RoiBackdrop from '../components/RoiBackdrop';
 import { fetchPersonById } from '../utils/api';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import RoiBackdrop from '../components/RoiBackdrop';
 import RoiHeader from '../components/RoiHeader';
 import Text, { fonts } from '../components/Text';
+import LoadingPlaceholder from '../components/LoadingPlaceholder';
 
 /**
  * Screen for viewing details of a staff member.
@@ -18,21 +16,19 @@ export default function PersonViewScreen(props) {
   /** Material UI theme. */
   const theme = useTheme();
 
-  // #region Database Fetch
-  const [person, setPerson] = useState({
-    name: '',
-    phone: '00 0000 0000',
-    street: '',
-    city: '',
-    state: '',
-    zip: '0000',
-    country: '',
-    Department: { id: 1, name: '' },
-    departmentId: 1,
-  });
-  const [offline, setOffline] = useState(false);
-  const [error, setError] = useState(null);
+  // #region State
+  // Employee data to view.
+  const [person, setPerson] = useState(null);
 
+  // Whether offline mode is active.
+  const [offline, setOffline] = useState(false);
+
+  // Current error.
+  const [error, setError] = useState(null);
+  // #endregion
+
+  // #region Database Fetch
+  /** Fetches employee data. */
   const fetchDataPerson = async () => {
     try {
       const data = await fetchPersonById(id);
@@ -56,6 +52,11 @@ export default function PersonViewScreen(props) {
   }
   // #endregion
 
+  // If the 'person' object hasn't loaded yet, render a placeholder.
+  if (person == null) {
+    return (<LoadingPlaceholder text='Loading profile...' />);
+  }
+  // Else, load full view.
   return (
     <RoiBackdrop>
       <RoiHeader title={person.name} personView={true} />
@@ -64,6 +65,7 @@ export default function PersonViewScreen(props) {
           style={styles.surfaceContent}
           elevation={1}
         >
+          {/* Fields */}
           <PersonField theme={theme} label='Department' value={person.Department.name} />
           <PersonField theme={theme} label='Phone' value={person.phone} />
           <PersonField theme={theme} label='Street' value={person.street} />
@@ -90,7 +92,7 @@ export default function PersonViewScreen(props) {
   )
 }
 
-/** Information entry. */
+/** Display for a single field of the person object. */
 function PersonField({ label, value, theme }) {
   return (
     <View style={styles.viewField}>
