@@ -6,6 +6,7 @@ import { deletePerson, fetchPeople } from '../utils/api';
 import RoiHeader from '../components/RoiHeader';
 import RoiBackdrop from '../components/RoiBackdrop';
 import Text, { fonts } from '../components/Text';
+import OfflineBanner from '../components/OfflineBanner';
 
 /**
  * Screen for viewing the Staff Contact Directory.
@@ -41,7 +42,7 @@ export default function DirectoryScreen(props) {
   // Fetches the list of all people.
   const fetchData = async () => {
     try {
-      const data = await fetchPeople();
+      const data = await fetchPeople(setOffline);
       setPeople(data);
     } catch (err) {
       console.error(err);
@@ -106,6 +107,9 @@ export default function DirectoryScreen(props) {
 
   return (
     <RoiBackdrop>
+      {/* Offline Banner */}
+      {offline && (<OfflineBanner visible={offline} />)}
+
       {/* Header. */}
       <RoiHeader title='Staff Directory' />
 
@@ -129,6 +133,7 @@ export default function DirectoryScreen(props) {
                 size={24}
                 mode='contained-tonal'
                 onPress={() => showEditPerson(item.id)}
+                disabled={offline}
               >
                 View
               </IconButton>
@@ -136,9 +141,8 @@ export default function DirectoryScreen(props) {
                 icon='delete'
                 size={24}
                 mode='contained-tonal'
-                onPress={() => {
-                  showDeleteDialog(item.id, item.name);
-                }}
+                onPress={() => showDeleteDialog(item.id, item.name)}
+                disabled={offline}
               >
                 View
               </IconButton>
@@ -182,6 +186,7 @@ export default function DirectoryScreen(props) {
         mode='elevated'
         variant='secondary'
         onPress={() => showAddPerson()}
+        disabled={offline}
       />
 
       {/* Deletion confirmation dialog. */}
