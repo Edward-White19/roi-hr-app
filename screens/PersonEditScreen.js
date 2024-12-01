@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { View, StyleSheet, ScrollView, useWindowDimensions } from 'react-native'
 import { Button, Surface, TextInput, useTheme } from 'react-native-paper';
-import { addPerson, fetchDepartments, fetchPersonById, updatePerson } from '../utils/api';
 import { Dropdown } from 'react-native-paper-dropdown';
+import { addPerson, fetchDepartments, fetchPersonById, updatePerson } from '../utils/api';
 import RoiBackdrop from '../components/RoiBackdrop';
 import RoiHeader from '../components/RoiHeader';
 import Text, { fonts } from '../components/Text';
@@ -61,7 +61,7 @@ export default function PersonEditScreen(props) {
     }
 
     try {
-      const data = await fetchPersonById(id);
+      const data = await fetchPersonById(id, setOffline);
       setPerson(data);
     } catch (err) {
       console.error(err);
@@ -73,7 +73,7 @@ export default function PersonEditScreen(props) {
   /** Fetches list of departments. */
   const fetchDataDepartments = async () => {
     try {
-      const data = await fetchDepartments();
+      const data = await fetchDepartments(setOffline);
       setDepartments(data);
     } catch (err) {
       console.error(err);

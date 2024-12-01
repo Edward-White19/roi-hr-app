@@ -32,7 +32,7 @@ export default function PersonViewScreen(props) {
   /** Fetches employee data. */
   const fetchDataPerson = async () => {
     try {
-      const data = await fetchPersonById(id);
+      const data = await fetchPersonById(id, setOffline);
       setPerson(data);
     } catch (err) {
       console.error(err);
