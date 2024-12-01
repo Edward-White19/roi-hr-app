@@ -14,7 +14,7 @@ import Text, { fonts } from '../components/Text';
 */
 export default function PersonEditScreen(props) {
   /** ID of the person to edit. */
-  const { id, refreshList } = props.route.params;
+  const { id } = props.route.params;
   /** Whether the page is in Edit or Add mode. */
   const isEditMode = (id >= 0);
   /** Material theme. */
@@ -83,7 +83,6 @@ export default function PersonEditScreen(props) {
       } else {
         await updatePerson(id, updatedPerson);
       }
-      refreshList();
       props.navigation.goBack();
     } catch (err) {
       console.error(err);

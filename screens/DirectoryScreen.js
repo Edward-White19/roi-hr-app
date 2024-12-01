@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, FlatList } from 'react-native';
+import { StyleSheet, FlatList, View } from 'react-native';
 import { Button, Card, Dialog, FAB, IconButton, Portal } from 'react-native-paper';
 import RoiHeader from '../components/RoiHeader';
 import RoiBackdrop from '../components/RoiBackdrop';
-import { View } from 'react-native-web';
 import { deletePerson, fetchPeople } from '../utils/api';
 import Text, { fonts } from '../components/Text';
+import { useIsFocused } from '@react-navigation/native';
 
 /**
  * Screen for viewing the Staff Contact Directory.
@@ -14,14 +14,30 @@ import Text, { fonts } from '../components/Text';
  * or add a new staff member.
 */
 export default function DirectoryScreen(props) {
-  // #region Database Fetch
-  const [people, setPeople] = useState([]);
-  const [offline, setOffline] = useState(false);
-  const [error, setError] = useState(null);
-  const [deleteDialogVisible, setDeleteDialogVisible] = useState(false);
-  const [selectedId, setSelectedId] = useState(null);
-  const [selectedName, setSelectedName] = useState(null);
+  // Whether the screen is currently focused.
+  const isFocused = useIsFocused();
 
+  // #region State
+  // List of employees.
+  const [people, setPeople] = useState([]);
+
+  // Whether offline mode is active.
+  const [offline, setOffline] = useState(false);
+
+  // Current error.
+  const [error, setError] = useState(null);
+
+  // Whether the "delete" dialog is visible.
+  const [deleteDialogVisible, setDeleteDialogVisible] = useState(false);
+
+  // ID of the employee to delete.
+  const [selectedId, setSelectedId] = useState(null);
+
+  // Name of the employee to delete.
+  const [selectedName, setSelectedName] = useState(null);
+  // #endregion
+
+  // #region Database Fetch
   // Fetches the list of all people.
   const fetchData = async () => {
     try {
@@ -34,7 +50,7 @@ export default function DirectoryScreen(props) {
     }
   };
 
-  useEffect(() => { fetchData() }, []);
+  useEffect(() => { fetchData() }, [isFocused]);
 
   // Delete a person.
   async function handleDelete() {
@@ -55,12 +71,14 @@ export default function DirectoryScreen(props) {
     }
   }
 
+  /** Show the deletion confirmation dialog. */
   function showDeleteDialog(id, name) {
     setSelectedId(id);
     setSelectedName(name);
     setDeleteDialogVisible(true);
   }
 
+  /** Hide the deletion confirmation dialog. */
   function hideDeleteDialog() {
     setDeleteDialogVisible(false);
     setSelectedId(null);
@@ -70,12 +88,12 @@ export default function DirectoryScreen(props) {
   // #region Navigation
   /** Navigates to the Add Person screen. */
   function showAddPerson() {
-    props.navigation.navigate('edit-one', { id: -1, refreshList: fetchData });
+    props.navigation.navigate('edit-one', { id: -1 });
   }
 
   /** Navigates to the Edit Person screen. */
   function showEditPerson(id) {
-    props.navigation.navigate('edit-one', { id: id, refreshList: fetchData });
+    props.navigation.navigate('edit-one', { id: id });
   }
 
   /** Navigates to the View Person screen. */
@@ -96,12 +114,13 @@ export default function DirectoryScreen(props) {
         data={people}
         keyExtractor={item => item.id}
         renderItem={({ item }) =>
+          // Profile card.
           <Card
             key={item.id}
             contentStyle={styles.surfaceProfile}
             onPress={() => showViewPerson(item.id)}
           >
-            {/* Icon and button section. */}
+            {/* Profile buttons section. */}
             <View style={styles.viewProfileActions}>
               <IconButton
                 icon='pencil'
@@ -123,7 +142,7 @@ export default function DirectoryScreen(props) {
               </IconButton>
             </View>
 
-            {/* Text content section. */}
+            {/* Profile text content section. */}
             <View style={styles.viewProfileContent}>
               <Text
                 variant='headlineSmall'
@@ -163,12 +182,13 @@ export default function DirectoryScreen(props) {
         onPress={() => showAddPerson()}
       />
 
-      {/* Dialog for delete confirmation */}
+      {/* Deletion confirmation dialog. */}
       <Portal>
         <Dialog visible={deleteDialogVisible} onDismiss={hideDeleteDialog}>
           <Dialog.Title style={fonts.trebuchetMS}>Confirm Deletion</Dialog.Title>
           <Dialog.Content>
-            <Text>Are you sure you want to delete
+            <Text>
+              Are you sure you want to delete
               <Text fontWeight='bold'>{' ' + selectedName}</Text>
               ?
             </Text>
