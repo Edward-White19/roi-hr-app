@@ -6,6 +6,7 @@ import { deletePerson, fetchPeople } from '../utils/api';
 import RoiHeader from '../components/RoiHeader';
 import RoiBackdrop from '../components/RoiBackdrop';
 import Text, { fonts } from '../components/Text';
+import OfflineBanner from '../components/OfflineBanner';
 
 /**
  * Screen for viewing the Staff Contact Directory.
@@ -106,6 +107,11 @@ export default function DirectoryScreen(props) {
 
   return (
     <RoiBackdrop>
+      {/* Offline Banner */}
+      {true && (
+        <OfflineBanner visible={true} />
+      )}
+
       {/* Header. */}
       <RoiHeader title='Staff Directory' />
 
