@@ -13,6 +13,7 @@ import LoadingPlaceholder from '../components/LoadingPlaceholder';
 export default function PersonViewScreen(props) {
   /** ID of the person to view. */
   const { id } = props.route.params;
+
   /** Material UI theme. */
   const theme = useTheme();
 
@@ -45,13 +46,6 @@ export default function PersonViewScreen(props) {
   }, []);
   // #endregion
 
-  // #region Navigation
-  /** Navigates to the main Staff Contact Directory screen. */
-  function showDirectory() {
-    props.navigation.navigate('view-all');
-  }
-  // #endregion
-
   // If the 'person' object hasn't loaded yet, render a placeholder.
   if (person == null) {
     return (<LoadingPlaceholder text='Loading profile...' />);
@@ -79,7 +73,7 @@ export default function PersonViewScreen(props) {
             <Button
               mode='contained'
               icon='keyboard-return'
-              onPress={showDirectory}
+              onPress={props.navigation.goBack}
               style={styles.buttonAction}
               labelStyle={fonts.trebuchetMS}
             >

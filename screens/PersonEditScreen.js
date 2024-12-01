@@ -6,6 +6,7 @@ import { Dropdown } from 'react-native-paper-dropdown';
 import RoiBackdrop from '../components/RoiBackdrop';
 import RoiHeader from '../components/RoiHeader';
 import Text, { fonts } from '../components/Text';
+import LoadingPlaceholder from '../components/LoadingPlaceholder';
 
 /**
  * Screen for editing the details of a staff member, or adding a new staff member.
@@ -15,16 +16,21 @@ import Text, { fonts } from '../components/Text';
 export default function PersonEditScreen(props) {
   /** ID of the person to edit. */
   const { id } = props.route.params;
+
   /** Whether the page is in Edit or Add mode. */
   const isEditMode = (id >= 0);
-  /** Material theme. */
+
+  /** Material UI theme. */
   const { colors } = useTheme();
-  /** Field width, since the dropdown refuses to cooperate. */
+
+  /** Field width, since the dropdown's width refuses to cooperate. */
   const fieldWidth = useWindowDimensions().width - 40;
-  /** Style to use across all fields for dimensions. */
+
+  /** Style to use across all fields, for dimensions. */
   const fieldStyle = { width: fieldWidth, backgroundColor: colors.elevation.level1 };
 
   // #region States
+  // 'person' object to add/edit.
   const [person, setPerson] = useState({
     name: '',
     phone: '',
@@ -36,14 +42,21 @@ export default function PersonEditScreen(props) {
     Department: { id: 1, name: '' },
     departmentId: '',
   });
+
+  // List of departments.
   const [departments, setDepartments] = useState([]);
+
+  // Whether offline mode is active.
   const [offline, setOffline] = useState(false);
+
+  // Current error.
   const [error, setError] = useState(null);
   // #endregion
 
   // #region Database Fetch
+  /** Fetches employee data. */
   const fetchDataPerson = async () => {
-    if (id < 0) {
+    if (!isEditMode) {
       return;
     }
 
@@ -57,6 +70,7 @@ export default function PersonEditScreen(props) {
     }
   };
 
+  /** Fetches list of departments. */
   const fetchDataDepartments = async () => {
     try {
       const data = await fetchDepartments();
@@ -75,6 +89,7 @@ export default function PersonEditScreen(props) {
   // #endregion
 
   // #region Database Post/Put
+  /** Attempts to add/update the employee. */
   async function handleSubmit() {
     try {
       const updatedPerson = { ...person };
@@ -91,13 +106,11 @@ export default function PersonEditScreen(props) {
   };
   // #endregion
 
-  // #region Navigation
-  /** Navigates to the main Staff Contact Directory screen. */
-  function showDirectory() {
-    props.navigation.navigate('view-all');
+  // If the list of departments hasn't loaded yet, render a placeholder.
+  if ((departments == null) || (departments.length == 0)) {
+    return (<LoadingPlaceholder text='Loading departments...' />);
   }
-  // #endregion
-
+  // Else, load full view.
   return (
     <RoiBackdrop>
       <RoiHeader title={((isEditMode) ? 'Edit' : 'Add') + ' Staff'} />
@@ -228,7 +241,7 @@ export default function PersonEditScreen(props) {
                 icon='keyboard-return'
                 style={styles.buttonActions}
                 labelStyle={fonts.trebuchetMS}
-                onPress={showDirectory}
+                onPress={props.navigation.goBack}
               >
                 Cancel
               </Button>

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, FlatList, View } from 'react-native';
 import { Button, Card, Dialog, FAB, IconButton, Portal } from 'react-native-paper';
+import { useIsFocused } from '@react-navigation/native';
+import { deletePerson, fetchPeople } from '../utils/api';
 import RoiHeader from '../components/RoiHeader';
 import RoiBackdrop from '../components/RoiBackdrop';
-import { deletePerson, fetchPeople } from '../utils/api';
 import Text, { fonts } from '../components/Text';
-import { useIsFocused } from '@react-navigation/native';
 
 /**
  * Screen for viewing the Staff Contact Directory.
@@ -14,7 +14,7 @@ import { useIsFocused } from '@react-navigation/native';
  * or add a new staff member.
 */
 export default function DirectoryScreen(props) {
-  // Whether the screen is currently focused.
+  /* Whether the screen is currently focused. */
   const isFocused = useIsFocused();
 
   // #region State
@@ -51,8 +51,10 @@ export default function DirectoryScreen(props) {
   };
 
   useEffect(() => { fetchData() }, [isFocused]);
+  // #endregion
 
-  // Delete a person.
+  // #region Database Delete
+  /** Attempts to delete the selected person. */
   async function handleDelete() {
     if (selectedId !== null) {
       try {
@@ -64,7 +66,7 @@ export default function DirectoryScreen(props) {
           setError("Failed to delete. Please try again.");
         }
       } catch (err) {
-        console.error("Error deleting:", err);
+        console.error("Error deleting: ", err);
         setError("Failed to delete. Check your connection.");
         hideDeleteDialog();
       }
