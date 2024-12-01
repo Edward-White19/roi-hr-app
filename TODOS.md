@@ -9,11 +9,11 @@
 - [x] Replaces references to [RoiStyle.colours](styles/RoiStyle.js) with theme
 - [x] Add text resizing functionality to [HelpScreen](screens/HelpScreen.js)
 - [x] Update design to match prototype design
-- [x] Set all text to use the 'Trebuchet MS' font family.
-- [x] Make buttons rounder.
-- [ ] Replace placeholder content in [HelpScreen](screens/HelpScreen.js) with original text.
-- [ ] Consider moving POST and PUSH api calls to [DirectoryScreen](screens/DirectoryScreen.js)
-- [ ] Implement offline mode.
+- [x] Set all text to use the 'Trebuchet MS' font family
+- [x] Make buttons rounder
+- [ ] Replace placeholder content in [HelpScreen](screens/HelpScreen.js) with original text
+- [ ] Implement offline mode
+- [ ] Implement "loading" overlay
 
 ---
 
@@ -22,7 +22,7 @@
 - [x] Finalise prototype design
   - [x] Update icons to match frontend.
 - [x] Send email requesting feedback for prototype
-- [ ] Rewrite screen specifications for currency
+- [x] Rewrite screen specifications for currency
 - [ ] Fill details regarding use of VCS (Git)
 - [ ] Send email requesting feedback for design report
 - [ ] Create video demonstration of application
