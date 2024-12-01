@@ -1,6 +1,5 @@
 {
   "dark": false,
-  "roundness": 2,
   "colors": {
     "primary": "rgb(175, 46, 45)",
     "onPrimary": "rgb(255, 255, 255)",

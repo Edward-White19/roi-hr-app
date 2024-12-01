@@ -10,10 +10,10 @@
 - [x] Add text resizing functionality to [HelpScreen](screens/HelpScreen.js)
 - [x] Update design to match prototype design
 - [x] Set all text to use the 'Trebuchet MS' font family.
+- [x] Make buttons rounder.
 - [ ] Replace placeholder content in [HelpScreen](screens/HelpScreen.js) with original text.
 - [ ] Consider moving POST and PUSH api calls to [DirectoryScreen](screens/DirectoryScreen.js)
 - [ ] Implement offline mode.
-- [ ] Make buttons rounder.
 
 ---
 
