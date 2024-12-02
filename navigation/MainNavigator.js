@@ -21,7 +21,7 @@ export default function MainNavigator() {
         options={{
           tabBarLabel: <Text>Home</Text>,
           tabBarIcon: ({ color }) => (
-            <MaterialIcons name='home' color={color} size={iconSize} style={{ top: -4 }} />
+            <MaterialIcons name='home' color={color} size={iconSize} style={{ top: -2 }} />
           ),
         }}
       />
@@ -31,7 +31,7 @@ export default function MainNavigator() {
         options={{
           tabBarLabel: <Text>View</Text>,
           tabBarIcon: ({ color }) => (
-            <MaterialIcons name='people-alt' color={color} size={iconSize} style={{ top: -4 }} />
+            <MaterialIcons name='people-alt' color={color} size={iconSize} style={{ top: -2 }} />
           ),
         }}
       />
@@ -41,7 +41,7 @@ export default function MainNavigator() {
         options={{
           tabBarLabel: <Text>Help</Text>,
           tabBarIcon: ({ color }) => (
-            <MaterialIcons name='question-mark' color={color} size={iconSize} style={{ top: -4 }} />
+            <MaterialIcons name='question-mark' color={color} size={iconSize} style={{ top: -2 }} />
           ),
         }}
       />
