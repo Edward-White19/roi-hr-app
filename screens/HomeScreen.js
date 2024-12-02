@@ -18,7 +18,7 @@ export default function HomeScreen(props) {
         <Divider horizontalInset={true} style={{ width: '100%' }} />
         <View style={styles.viewCopyright}>
           <Text variant='bodySmall' style={styles.textCopyright}>Developed by Edward White</Text>
-          <Text variant='bodySmall' style={styles.textCopyright}>&copy; 2024 Red Opal Innovations</Text>
+          <Text variant='bodySmall' style={styles.textCopyright}>Red Opal Innovations &copy; 2024</Text>
         </View>
       </Surface>
     </RoiBackdrop>
