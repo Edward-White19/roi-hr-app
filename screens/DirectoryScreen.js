@@ -125,6 +125,7 @@ export default function DirectoryScreen(props) {
             key={item.id}
             contentStyle={styles.surfaceProfile}
             onPress={() => showViewPerson(item.id)}
+            disabled={offline}
           >
             {/* Profile buttons section. */}
             <View style={styles.viewProfileActions}>
